@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -203,14 +204,14 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.008181818
     width: 1
-    height: 1
+    height: 0.98181814
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -241,6 +242,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_AssetsPPU: 16
+  m_RefResolutionX: 320
+  m_RefResolutionY: 180
+  m_CropFrame: 2
+  m_GridSnapping: 1
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +387,7 @@ GameObject:
   - component: {fileID: 1658319987}
   - component: {fileID: 1658319986}
   - component: {fileID: 1658319985}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,9 +494,49 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: AirSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: CastSize
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: JumpForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: GroundedSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: jumpStartTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: defaultGravity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: fallingGravity
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: floatingGravity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2165196964728349913, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: GroundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2797436155123875220, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351338195899677598, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5690062931992354905, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
       propertyPath: m_RootOrder
@@ -517,6 +581,10 @@ PrefabInstance:
     - target: {fileID: 5690062931992354905, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8123630673492233567, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a3738441451efa4b9e58642da3b54c5, type: 3}
