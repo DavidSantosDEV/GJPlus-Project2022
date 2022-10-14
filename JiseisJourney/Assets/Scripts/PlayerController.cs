@@ -10,6 +10,7 @@ enum PlayerStates
     Jumping,
     Falling,
     Floating,
+	Stuck,
 }
 
 public class PlayerController : MonoBehaviour
@@ -49,7 +50,12 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private float jumpStartTime = 0.25f;
 
-	private float jumpTime;
+	[SerializeField]
+	private float coyoteeTime= .2f;
+
+	bool bCanCoyotee = false;
+
+    private float jumpTime;
 
 	private Vector2 LastNonZeroDirection;
 
@@ -268,7 +274,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (Mathf.Abs(myBody.velocity.x) > 0f)
 		{
-			mySprite.flipX = myBody.velocity.x > 0f;
+			gameObject.transform.localScale= myBody.velocity.x < 0f ? Vector3.one : new Vector3(-1,1,1); 
 		}
 	}
 
