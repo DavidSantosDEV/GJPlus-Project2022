@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
         Grounded,
         Jumping,
         Falling,
+        TongueOut,
+        TongueIn,
     }
 
 
@@ -74,6 +76,10 @@ public class PlayerController : MonoBehaviour
     private readonly int JumpAnim = Animator.StringToHash("Jumping");
     private readonly int idleAnim = Animator.StringToHash("Idle");
     private readonly int fallingAnim = Animator.StringToHash("Falling");
+    private readonly int tongueInAnim = Animator.StringToHash("TongueIn");
+    private readonly int tongueOutAnim = Animator.StringToHash("TongueOut");
+
+    private float FatValue = 0f;
 
     private void Awake()
     {
@@ -96,6 +102,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _animator.SetFloat("Blend", FatValue);
         switch (myState)
         {
             case PlayerState.Falling:
@@ -138,15 +145,23 @@ public class PlayerController : MonoBehaviour
                     }
                 }
 
+                if (InputSource.Gameplay.Tongue.triggered)
+                {
+                    ChangePlayerState(PlayerState.TongueOut);
+                }
+
+                break;
+            case PlayerState.TongueOut:
+            case PlayerState.TongueIn:
 
                 if (InputSource.Gameplay.Tongue.IsPressed())
                 {
 
-                    if (_lineRenderer.positionCount>0)
+                    if (_lineRenderer.positionCount > 0)
                     {
-                        if (currentTongueLenght<tongueLenght)
+                        if (currentTongueLenght < tongueLenght)
                         {
-                            currentTongueLenght += Time.deltaTime* TongueSpeed;
+                            currentTongueLenght += Time.deltaTime * TongueSpeed;
                             currentTongueLenght = Mathf.Clamp(currentTongueLenght, 0, tongueLenght);
                         }
                         _lineRenderer.SetPosition(0, TongueStart.transform.position);
@@ -160,8 +175,6 @@ public class PlayerController : MonoBehaviour
                         Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
                         _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
                     }
-                    
-
                 }
                 else
                 {
@@ -177,9 +190,11 @@ public class PlayerController : MonoBehaviour
                     {
                         Vector3[] vals = { Vector3.zero, Vector3.zero };
                         _lineRenderer.SetPositions(vals);
+                        ChangePlayerState(PlayerState.Grounded);
                     }
-                    
+
                 }
+
                 break;
         }
         CheckFlipped();
@@ -189,8 +204,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GetHasTongueOut()) return;
-
+        if (GetHasTongueOut())
+        {
+            _rigidBody.velocity = Vector2.zero;
+            return;
+        }
 
         Vector2 vector = InputSource.Gameplay.Movement.ReadValue<Vector2>(); //Input Vector
         if (vector != Vector2.zero && vector != Vector2.down && vector != Vector2.up)
@@ -206,6 +224,8 @@ public class PlayerController : MonoBehaviour
 
         switch (myState)
         {
+            
+
             case PlayerState.Jumping:
             case PlayerState.Falling:
                 
@@ -224,6 +244,9 @@ public class PlayerController : MonoBehaviour
                     _animator?.CrossFade(stateHashName, 0f, 0);
                     break;
                 }
+            default:
+                _rigidBody.velocity = Vector2.zero;
+                break;
         }
      
     }
@@ -249,6 +272,12 @@ public class PlayerController : MonoBehaviour
                 case PlayerState.Grounded:
                     _rigidBody.gravityScale = GravityDefault;
                     bHasJumpSetDirection = false;
+                    break;
+                case PlayerState.TongueOut:
+                    stateHashName = tongueOutAnim;
+                    break;
+                case PlayerState.TongueIn:
+                    stateHashName = tongueInAnim;
                     break;
                 default:
                     stateHashName = idleAnim;
@@ -283,7 +312,11 @@ public class PlayerController : MonoBehaviour
                 {
                     flag = true;
                     _rigidBody.gravityScale = GravityDefault;
-                    ChangePlayerState(PlayerState.Grounded);
+                    if (!(PlayerState.TongueIn == myState) && !(PlayerState.TongueOut == myState))
+                    {
+                        ChangePlayerState(PlayerState.Grounded);
+                    }
+                    
                     break;
                 }
             }

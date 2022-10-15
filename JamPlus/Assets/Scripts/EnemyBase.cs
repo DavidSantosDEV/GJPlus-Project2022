@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : MonoBehaviour, IEatableInterface
 {
     [Header("Enemy Settings")]
     [SerializeField]
@@ -23,6 +23,7 @@ public class EnemyBase : MonoBehaviour
 
     private Rigidbody2D _rigidbody2D;
 
+    private bool bIsGrabbed = false;
     private bool bCanMove = true;
     private int currentIndexOfPosition=0;
 
@@ -59,7 +60,7 @@ public class EnemyBase : MonoBehaviour
         {
             
             float val = (amp * Mathf.Sin(Time.deltaTime * omega));
-            Debug.Log(val);
+            //Debug.Log(val);
             _rigidbody2D.velocity = new Vector2(0, val);
         }
         
@@ -80,4 +81,11 @@ public class EnemyBase : MonoBehaviour
 
     }
 
+    public void OnGrabbed()
+    {
+        CancelInvoke(nameof(EnableCanMove));
+        bCanMove=false;
+        bIsGrabbed = true;
+
+    }
 }
