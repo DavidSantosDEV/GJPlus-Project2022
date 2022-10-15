@@ -6,16 +6,20 @@ using Unity.VisualScripting;
 using static PlayerController;
 using System.Runtime.CompilerServices;
 
+[System.Serializable]
+public enum PlayerState
+{
+    Grounded,
+    Jumping,
+    Falling,
+    TongueOut,
+    TongueIn,
+    ImportantAnim,
+}
+
 public class PlayerController : MonoBehaviour
 {
-    public enum PlayerState
-    {
-        Grounded,
-        Jumping,
-        Falling,
-        TongueOut,
-        TongueIn,
-    }
+
 
 
     [Header("Movement")]
@@ -32,8 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpForce;
     [SerializeField]
-    float fStrenghtOffsetInput = 0.1f;
-    [SerializeField]
     private float jumpStartTime;
     private float jumpTime;
     [SerializeField]
@@ -47,7 +49,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float tongueLenght;
     [SerializeField]
-    float TongueSpeed = 0;
+    float TongueSpeed = 0f;
+    [SerializeField]
+    float TongueCheckSize = 5f;
+    [SerializeField]
+    LayerMask GrabbableLayers;
+
+    private GameObject GrabbedObject;
 
     float currentTongueLenght = 0;
 
@@ -76,8 +84,9 @@ public class PlayerController : MonoBehaviour
     private readonly int JumpAnim = Animator.StringToHash("Jumping");
     private readonly int idleAnim = Animator.StringToHash("Idle");
     private readonly int fallingAnim = Animator.StringToHash("Falling");
-    private readonly int tongueInAnim = Animator.StringToHash("TongueIn");
+    private readonly int tongueInAnim = Animator.StringToHash("LoopTongue");
     private readonly int tongueOutAnim = Animator.StringToHash("TongueOut");
+    private readonly int eatingAnim = Animator.StringToHash("Eating");
 
     private float FatValue = 0f;
 
@@ -96,7 +105,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Vector3[] vals = { Vector3.zero, Vector3.zero };
+        _lineRenderer.SetPositions(vals);
     }
 
     // Update is called once per frame
@@ -152,54 +162,94 @@ public class PlayerController : MonoBehaviour
 
                 break;
             case PlayerState.TongueOut:
-            case PlayerState.TongueIn:
-
-                if (InputSource.Gameplay.Tongue.IsPressed())
+                if (_lineRenderer.positionCount > 0)
                 {
-
-                    if (_lineRenderer.positionCount > 0)
+                    if (currentTongueLenght < tongueLenght)
                     {
-                        if (currentTongueLenght < tongueLenght)
-                        {
-                            currentTongueLenght += Time.deltaTime * TongueSpeed;
-                            currentTongueLenght = Mathf.Clamp(currentTongueLenght, 0, tongueLenght);
-                        }
+                        currentTongueLenght += Time.deltaTime * TongueSpeed;
+                        currentTongueLenght = Mathf.Clamp(currentTongueLenght, 0, tongueLenght);
+
                         _lineRenderer.SetPosition(0, TongueStart.transform.position);
                         Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
+
+                        Collider2D hit = Physics2D.OverlapCircle(pos, TongueCheckSize, GrabbableLayers);
+                        
+                        if (hit)
+                        {
+                            
+                            IEatableInterface eatable = hit.gameObject.GetComponent<IEatableInterface>();
+                            if (eatable!=null)
+                            {
+                                Debug.Log("Eatable found");
+                                eatable.OnGrabbed();
+                                GrabbedObject = hit.gameObject;
+                                ChangePlayerState(PlayerState.TongueIn);
+                            }
+                        }
 
                         _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
                     }
                     else
                     {
-                        _lineRenderer.SetPosition(0, TongueStart.transform.position);
-                        Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
-                        _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
+                        ChangePlayerState(PlayerState.TongueIn);
+                    }
+
+                }
+                else
+                {
+                    _lineRenderer.SetPosition(0, TongueStart.transform.position);
+                    Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
+                    _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
+                }
+                break;
+            case PlayerState.TongueIn:
+
+                if (currentTongueLenght > 0)
+                {
+                    currentTongueLenght -= Time.deltaTime * TongueSpeed;
+                    Mathf.Clamp(currentTongueLenght, 0, currentTongueLenght);
+                    _lineRenderer.SetPosition(0, TongueStart.transform.position);
+                    Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
+                    _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
+                    if (GrabbedObject)
+                    {
+                        GrabbedObject.transform.position = pos;
                     }
                 }
                 else
                 {
-                    if (currentTongueLenght > 0)
+                    Vector3[] vals = { Vector3.zero, Vector3.zero };
+                    _lineRenderer.SetPositions(vals);
+                    ChangePlayerState(PlayerState.Grounded);
+                    if (GrabbedObject)
                     {
-                        currentTongueLenght -= Time.deltaTime * TongueSpeed;
-                        Mathf.Clamp(currentTongueLenght, 0, currentTongueLenght);
-                        _lineRenderer.SetPosition(0, TongueStart.transform.position);
-                        Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
-                        _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
-                    }
-                    else
-                    {
-                        Vector3[] vals = { Vector3.zero, Vector3.zero };
-                        _lineRenderer.SetPositions(vals);
-                        ChangePlayerState(PlayerState.Grounded);
-                    }
+                        Destroy(GrabbedObject);
 
+                        
+                        ChangePlayerState(PlayerState.ImportantAnim);
+                        _animator.CrossFade(eatingAnim, 0f, 0);
+
+                    }
                 }
+
+                
 
                 break;
         }
         CheckFlipped();
         CheckGrounded();
         //movementInput = InputSource.Gameplay.Movement.ReadValue<Vector2>();
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if(_lineRenderer != null)
+        if (_lineRenderer.positionCount>0)
+        {
+            Gizmos.DrawSphere(this._lineRenderer.GetPosition(1), TongueCheckSize);
+        }
+        
     }
 
     private void FixedUpdate()
@@ -312,7 +362,7 @@ public class PlayerController : MonoBehaviour
                 {
                     flag = true;
                     _rigidBody.gravityScale = GravityDefault;
-                    if (!(PlayerState.TongueIn == myState) && !(PlayerState.TongueOut == myState))
+                    if (!(PlayerState.TongueIn == myState) && !(PlayerState.TongueOut == myState) && !(PlayerState.ImportantAnim == myState))
                     {
                         ChangePlayerState(PlayerState.Grounded);
                     }

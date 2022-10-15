@@ -10,81 +10,100 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
     [SerializeField]
     private List<Transform> patrolPoints = new List<Transform>();
     [SerializeField]
-    private bool IsRandomPatrol=false;
-    [SerializeField]
-    private float WaitBetweenPoints=0f;
-    [SerializeField]
-    private float WaitOffset=1f;
-    [SerializeField]
     private float ArrivalDistance = 1f;
-    
     [SerializeField]
-    float amp = 2, omega = 1;
+    float oscilationsPerSecond = 4;
+    [SerializeField]
+    float speedFloating=1f;
 
     private Rigidbody2D _rigidbody2D;
 
     private bool bIsGrabbed = false;
-    private bool bCanMove = true;
+    private bool bIsMoving = false;
     private int currentIndexOfPosition=0;
 
+    float spawnTime;
     private void Awake()
     {
+        spawnTime = Time.time;
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+
+    private void Start()
     {
-        if (bCanMove)
+        if (patrolPoints.Count>=2)
         {
-            if (Vector2.Distance(transform.position, patrolPoints[currentIndexOfPosition].position) > ArrivalDistance)
-            {
-                Vector2 direction =  patrolPoints[currentIndexOfPosition].position- transform.position;
-                _rigidbody2D.velocity = direction.normalized * EnemySpeed;
-            }
-            else
-            {
-                if (WaitBetweenPoints>0)
-                {
-                    bCanMove = false;
-                    _rigidbody2D.velocity = Vector2.zero;
-                    Invoke(nameof(EnableCanMove),WaitBetweenPoints);
-                }
-                currentIndexOfPosition++;
-                if (currentIndexOfPosition>patrolPoints.Count-1)
-                {
-                    currentIndexOfPosition = 0;
-                }
-            }
+            Debug.Log("Enemy delegate");
+            transform.position = patrolPoints[0].position;
+            FrogController Player = GameManager.Instance.GetPlayer();
+            Player?.OnPlayerJumped.AddListener(StartMove);
         }
-        else
-        {
-            
-            float val = (amp * Mathf.Sin(Time.deltaTime * omega));
-            //Debug.Log(val);
-            _rigidbody2D.velocity = new Vector2(0, val);
-        }
+        _rigidbody2D.velocity = Vector2.zero;
         
+    }
+
+    void StartMove()
+    {
+        if(patrolPoints.Count>=2)
+        StartCoroutine(MoveToNext());
+    }
+
+    private IEnumerator MoveToNext()
+    {
+        bIsMoving = true;
+        float Value = 0f;
+        Vector2 originalPosition = transform.position;
+        while (Value < 1)
+        {
+            Value += Time.deltaTime * EnemySpeed;
+            Value = Mathf.Clamp01(Value);
+            transform.position = Vector3.Lerp(originalPosition, patrolPoints[currentIndexOfPosition].transform.position, Value);
+            yield return null;
+        }
+        currentIndexOfPosition++;
+        if (currentIndexOfPosition > patrolPoints.Count - 1)
+        {
+            currentIndexOfPosition = 0;
+        }
+        bIsMoving = false;
+    }
+
+    void FixedUpdate()
+    {
+        if (bIsMoving) return;
+        /*
+        float lifetime = Time.time - spawnTime;
+        float phase = lifetime * oscilationsPerSecond * 2f * Mathf.PI;
+
+        Vector2 velocity = _rigidbody2D.velocity;
+        velocity.y = speedFloating * Mathf.Cos(phase);
+
+        _rigidbody2D.velocity = velocity;*/
     }
 
     void EnableCanMove()
     {
-        bCanMove = true;
+        //bCanMove = true;
     }
 
-    void StartPatrol()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Player"))
+        {
+            Destroy(this);
+            FrogController player = GameManager.Instance.GetPlayer();
 
+            //Play anim
+
+            //Add Score
+            GameManager.Instance.AddScoreForLevel();
+        }
     }
-
-    public void SetPatrolPoints(Transform[] points, bool bRandomPatrol)
-    {
-
-    }
-
     public void OnGrabbed()
     {
         CancelInvoke(nameof(EnableCanMove));
-        bCanMove=false;
+        //bCanMove=false;
         bIsGrabbed = true;
 
     }

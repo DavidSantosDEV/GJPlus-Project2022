@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 5463860736652291668}
   - component: {fileID: 5463860736652291671}
   - component: {fileID: 5463860736652291667}
-  m_Layer: 0
+  - component: {fileID: 4052318994805587341}
+  m_Layer: 7
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,11 +74,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1455491481
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -951192360, guid: 05ffbb2f82b1e8b4f83612e765f11d4a, type: 3}
-  m_Color: {r: 0.8584906, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -1447672684, guid: 3bc406e59ca282749b1406b23cd685e9, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 5463860736652291670}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 80976aaef4e0ef3469abdf47b5fb9d89, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,16 +121,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemySpeed: 10
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
   IsRandomPatrol: 0
   WaitBetweenPoints: 2
-  WaitOffset: 1
   ArrivalDistance: 1
-  amp: 2
-  omega: 1
+  oscilationsPerSecond: 0.5
+  speedFloating: 1
 --- !u!50 &5463860736652291667
 Rigidbody2D:
   serializedVersion: 4
@@ -147,7 +144,23 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!70 &4052318994805587341
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5463860736652291670}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.13557029, y: 0.010992169}
+  m_Size: {x: 0.25985956, y: 0.68489075}
+  m_Direction: 0
