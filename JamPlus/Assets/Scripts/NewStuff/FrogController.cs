@@ -19,9 +19,11 @@ public class FrogController : MonoBehaviour
     Point selectedPoint;
 
     public UnityEvent OnPlayerJumped;
+    public UnityEvent OnPlayerEatFLy;
 
     private Animator _animator;
 
+    int currentAnim;
 
     public readonly int jumpAnim = Animator.StringToHash("Jumping");
     public readonly int idleAnim = Animator.StringToHash("Idle");
@@ -43,6 +45,15 @@ public class FrogController : MonoBehaviour
 
     public void ChangeAnimation(int animation)
     {
+        if (currentAnim == animation)
+        {
+            return;
+        }
+        if (currentAnim == eatingAnim && animation == idleAnim)
+        {
+            return;
+        }
+        currentAnim = animation;
         _animator?.CrossFade(animation, 0f, 0);
     }
 

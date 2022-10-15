@@ -18,4 +18,25 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
     }
+
+    public void ShowGameOver()
+    {
+
+    }
+
+    public void ShowGameWon(int starsWon)
+    {
+
+    }
+    public void ShowNextLevel(string nextLevel)
+    {
+        if (nextLevel == "")
+        {
+            ShowToMainMenu();
+        }
+    }
+    void ShowToMainMenu()
+    {
+
+    }
 }

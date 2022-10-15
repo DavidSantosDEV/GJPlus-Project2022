@@ -88,6 +88,7 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
             Destroy(gameObject);
             FrogController player = GameManager.Instance.GetPlayer();
             player.ChangeAnimation(player.eatingAnim);
+            player.OnPlayerEatFLy.Invoke();
             //Play anim
 
             //Add Score

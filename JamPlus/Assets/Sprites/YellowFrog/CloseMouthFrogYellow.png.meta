@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a804fbf0d98496e4eb11ad7caf242d7a
+guid: 0d48c068f84a67e499ea25079202b48d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -102,7 +102,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -114,11 +114,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 128
+    buildTarget: iPhone
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,11 +126,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 128
+    buildTarget: WebGL
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -141,85 +141,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: VitoriaRega_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.4816866, y: 0.6068276}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 95fbd0dbfb83e0143b9500be9dea635f
-      internalID: 337948052
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VitoriaRega_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.4816866, y: 0.6037755}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 12ab2384f6e6ded42a9f71d4caace233
-      internalID: -1641802188
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VitoriaRega_2
+      name: CloseMouthFrogYellow_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.54436487, y: 0.58272463}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c9d19356fc1a934ab435e574c93e177
-      internalID: -426477560
+      spriteID: 3c423d04174e2404ba5af1ef5381c152
+      internalID: 74420612
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VitoriaRega_3
+      name: CloseMouthFrogYellow_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5443646, y: 0.6259305}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be3324218fabf0e40b74db4cf2bd0fbf
-      internalID: -795311248
+      spriteID: e8b59f319bcd4d341bcf5727183721ad
+      internalID: -208177333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloseMouthFrogYellow_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faf568b78c8d5914580709868a2f6edf
+      internalID: -730274806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloseMouthFrogYellow_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 708864e312f254c4a880527728a74971
+      internalID: 866680922
       vertices: []
       indices: 
       edges: []
@@ -235,10 +235,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      VitoriaRega_1: -1641802188
-      VitoriaRega_2: -426477560
-      VitoriaRega_0: 337948052
-      VitoriaRega_3: -795311248
+      CloseMouthFrogYellow_0: 74420612
+      CloseMouthFrogYellow_3: 866680922
+      CloseMouthFrogYellow_1: -208177333
+      CloseMouthFrogYellow_2: -730274806
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

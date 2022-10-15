@@ -29,10 +29,20 @@ public class GameManager : MonoBehaviour
 
     private List<Point> LevelPoints = new List<Point>();
 
+    [SerializeField]
+    private bool DebugEditorMode=false;
+
+
+    private int CurrentLevelFliesEaten;
+    private int CurrentLevelMovesDone = 0;
+
+    void ResetLevelData()
+    {
+        CurrentLevelFliesEaten=0;
+        CurrentLevelMovesDone = 0;
+}
+
     public static GameManager Instance { private set; get; }
-
-
-    private int currentPlayerMoves;
 
     public float GetMovementSpeed() { return MovementSpeed; }
     private void Awake()
@@ -48,11 +58,41 @@ public class GameManager : MonoBehaviour
         }
 
         Player = FindObjectOfType<FrogController>();
+        if (Player)
+        {
+            Player.OnPlayerJumped.AddListener(AddJump);
+            Player.OnPlayerEatFLy.AddListener(AddFly);
+        }
     }
+
+    void AddJump()
+    {
+        CurrentLevelMovesDone++;
+    }
+    void AddFly()
+    {
+        CurrentLevelFliesEaten++;
+    }
+
     private void Start()
     {
-        LoadGameplayData();
+        if (DebugEditorMode)
+        {
+            ResetLevelData();
+            string NameOfScene = SceneManager.GetActiveScene().name;
+            for (int i = 0; i<AllLevels.Count; i++)
+            {
+                if (AllLevels[i].LevelName == NameOfScene)
+                {
+                    currentLevelIndex = i;
+                    break;
+                }
+            }
+            LoadGameplayData();
+        }
     }
+
+
     public void NextLevel()
     {
         currentLevelIndex++;
@@ -88,6 +128,7 @@ public class GameManager : MonoBehaviour
     {
         if (IsGameplayLevel(currentScene))
         {
+            ResetLevelData();
             LoadGameplayData();
         }
     }
@@ -144,6 +185,16 @@ public class GameManager : MonoBehaviour
     public void AddScoreForLevel()
     {
 
+    }
+
+    public void LevelComplete()
+    {
+        if (AllLevels[currentLevelIndex])
+        {
+            AllLevels[currentLevelIndex].SetIsFinished();
+            AllLevels[currentLevelIndex].CalculateStars(CurrentLevelFliesEaten, CurrentLevelMovesDone);
+        }
+        Debug.Log("Level completed!");
     }
 
     public FrogController GetPlayer() { return Player; }

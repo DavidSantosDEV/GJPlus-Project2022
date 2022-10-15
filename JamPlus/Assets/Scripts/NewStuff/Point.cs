@@ -23,10 +23,10 @@ public class Point : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            OnPlayerEntered();
-        }
+        //if (collision.CompareTag("Player"))
+        //{
+        //    OnPlayerEntered();
+        //}
         //
     }
 
@@ -35,6 +35,7 @@ public class Point : MonoBehaviour
         ToggleSelected(false);
         if (bIsEndPoint)
         {
+            GameManager.Instance?.LevelComplete();
             //GANHOUUUU
         }
     }

@@ -16,11 +16,11 @@ public class OnAnimationFinished : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerController Controller = animator.gameObject.GetComponent<PlayerController>();
+        FrogController Controller = animator.gameObject.GetComponent<FrogController>();
         if (Controller)
         {
             Debug.Log("Hey");
-            Controller.ChangePlayerState(stateToChange);
+            Controller.ChangeAnimation(Controller.idleAnim);
         } 
     }
 

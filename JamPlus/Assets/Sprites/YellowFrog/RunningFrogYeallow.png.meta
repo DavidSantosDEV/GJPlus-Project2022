@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a804fbf0d98496e4eb11ad7caf242d7a
+guid: a250cef4d152f3445842ef4800ceb112
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -102,7 +102,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -114,11 +114,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 128
+    buildTarget: iPhone
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,11 +126,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 128
+    buildTarget: WebGL
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -141,85 +141,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: VitoriaRega_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.4816866, y: 0.6068276}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 95fbd0dbfb83e0143b9500be9dea635f
-      internalID: 337948052
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VitoriaRega_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.4816866, y: 0.6037755}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 12ab2384f6e6ded42a9f71d4caace233
-      internalID: -1641802188
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VitoriaRega_2
+      name: RunningFrogYeallow_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.54436487, y: 0.58272463}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c9d19356fc1a934ab435e574c93e177
-      internalID: -426477560
+      spriteID: 041ff6af097cba547a1f8fa661007d2c
+      internalID: -1843826339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VitoriaRega_3
+      name: RunningFrogYeallow_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5443646, y: 0.6259305}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be3324218fabf0e40b74db4cf2bd0fbf
-      internalID: -795311248
+      spriteID: 5e84b6a22a469e847b141c7668765b54
+      internalID: -1547360810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningFrogYeallow_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48483b5057203814ba49864da8a77034
+      internalID: -2054194396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningFrogYeallow_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b704973f5bb6ca448d8a67407f201c3
+      internalID: 774828067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningFrogYeallow_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f444237d8c105fd46ae07703f8482c9f
+      internalID: 279227098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningFrogYeallow_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57034d644e79a944d8c19d2924baf732
+      internalID: -767307346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningFrogYeallow_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b07ff0cc499f4141a99c2e7a209943b
+      internalID: 167114118
       vertices: []
       indices: 
       edges: []
@@ -235,10 +298,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      VitoriaRega_1: -1641802188
-      VitoriaRega_2: -426477560
-      VitoriaRega_0: 337948052
-      VitoriaRega_3: -795311248
+      RunningFrogYeallow_4: 279227098
+      RunningFrogYeallow_2: -2054194396
+      RunningFrogYeallow_1: -1547360810
+      RunningFrogYeallow_3: 774828067
+      RunningFrogYeallow_0: -1843826339
+      RunningFrogYeallow_6: 167114118
+      RunningFrogYeallow_5: -767307346
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
