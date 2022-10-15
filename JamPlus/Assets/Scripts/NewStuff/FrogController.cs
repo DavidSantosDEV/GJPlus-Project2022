@@ -9,8 +9,6 @@ public class FrogController : MonoBehaviour
 {
 
     [Header("Player Settings")]
-    [SerializeField]
-    private float moveSpeed = 10f;
 
     bool bIsMoving = false;
 
@@ -22,6 +20,13 @@ public class FrogController : MonoBehaviour
 
     public UnityEvent OnPlayerJumped;
 
+    private Animator _animator;
+
+
+    public readonly int jumpAnim = Animator.StringToHash("Jumping");
+    public readonly int idleAnim = Animator.StringToHash("Idle");
+    public readonly int eatingAnim = Animator.StringToHash("Eating");
+
 
     private void Awake()
     {
@@ -29,8 +34,16 @@ public class FrogController : MonoBehaviour
 
         playerInput.Enable();
 
+
+        _animator = GetComponent<Animator>();
         //playerInput.Selection.Selection.started += OnSelectionChanged;
         //playerInput.Selection.MoveTo.started += ChosePath;
+    }
+
+
+    public void ChangeAnimation(int animation)
+    {
+        _animator?.CrossFade(animation, 0f, 0);
     }
 
     void OnUpdateIndex()
@@ -68,15 +81,7 @@ public class FrogController : MonoBehaviour
         Debug.Log("Current Index:" + SelectedIndex);
         OnUpdateIndex();
 
-    }
-
-    private void Update()
-    {
-        if (selectedPoint)
-        {
-            //Vector2.Lerp(SelectorMouse.transform.position, selectedPoint.transform.position, Time.deltaTime);
-        }
-    }
+    } //Legacy keyboard code
 
     void ChosePath(InputAction.CallbackContext context)
     {
@@ -101,14 +106,20 @@ public class FrogController : MonoBehaviour
 
     public void SetCurrentPoint(Point newPoint)
     {
+        if (!newPoint) return;
         if (CurrentPoint)
         {
             foreach (Point pa in CurrentPoint.GetNextPoints())
             {
                 pa.ToggleSelected(false);
             }
+            CurrentPoint.OnLeave();
+            
         }
+        
         CurrentPoint = newPoint;
+        newPoint.ToggleSelected(false);
+        newPoint.OnPlayerEntered();
         List<Point> points = newPoint.GetNextPoints();
         if (points.Count>0)
         {
@@ -127,15 +138,25 @@ public class FrogController : MonoBehaviour
         bIsMoving=true;
         float Value=0f;
         Vector2 originalPosition = transform.position;
+        CheckFlipping(originalPosition,selectedPoint.transform.position);
+        ChangeAnimation(jumpAnim);
         while (Value<1)
         {
-            Value += Time.deltaTime * moveSpeed;
+            Value += Time.deltaTime * GameManager.Instance.GetMovementSpeed();
             Value = Mathf.Clamp01(Value);
             transform.position = Vector3.Lerp(originalPosition, selectedPoint.transform.position, Value);
             yield return null;
         }
+        transform.position = Vector3.Lerp(originalPosition, selectedPoint.transform.position, 1);
         bIsMoving = false;
+        ChangeAnimation(idleAnim);
         SetCurrentPoint(selectedPoint);
+    }
+
+    void CheckFlipping(Vector2 posOriginal, Vector2 pos)
+    {
+        Vector2 value = (posOriginal - pos).normalized;
+        gameObject.transform.localScale = value.x < 0 ? Vector2.one : new Vector2(-1, 1);
     }
 
 }

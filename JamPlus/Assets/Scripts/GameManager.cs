@@ -16,6 +16,9 @@ public class LayerDouble
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField]
+    private float MovementSpeed = 4f;
     [SerializeField]
     private List<LevelData> AllLevels = new List<LevelData>();
 
@@ -29,8 +32,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { private set; get; }
 
 
+    private int currentPlayerMoves;
 
-
+    public float GetMovementSpeed() { return MovementSpeed; }
     private void Awake()
     {
         if (Instance == null)

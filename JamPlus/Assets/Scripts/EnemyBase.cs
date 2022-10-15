@@ -6,19 +6,10 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
 {
     [Header("Enemy Settings")]
     [SerializeField]
-    private float EnemySpeed=10;
-    [SerializeField]
     private List<Transform> patrolPoints = new List<Transform>();
-    [SerializeField]
-    private float ArrivalDistance = 1f;
-    [SerializeField]
-    float oscilationsPerSecond = 4;
-    [SerializeField]
-    float speedFloating=1f;
 
     private Rigidbody2D _rigidbody2D;
 
-    private bool bIsGrabbed = false;
     private bool bIsMoving = false;
     private int currentIndexOfPosition=0;
 
@@ -54,18 +45,19 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
         bIsMoving = true;
         float Value = 0f;
         Vector2 originalPosition = transform.position;
-        while (Value < 1)
-        {
-            Value += Time.deltaTime * EnemySpeed;
-            Value = Mathf.Clamp01(Value);
-            transform.position = Vector3.Lerp(originalPosition, patrolPoints[currentIndexOfPosition].transform.position, Value);
-            yield return null;
-        }
         currentIndexOfPosition++;
         if (currentIndexOfPosition > patrolPoints.Count - 1)
         {
             currentIndexOfPosition = 0;
         }
+        while (Value < 1)
+        {
+            Value += Time.deltaTime * GameManager.Instance.GetMovementSpeed();
+            Value = Mathf.Clamp01(Value);
+            transform.position = Vector3.Lerp(originalPosition, patrolPoints[currentIndexOfPosition].transform.position, Value);
+            yield return null;
+        }
+
         bIsMoving = false;
     }
 
@@ -89,11 +81,13 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        Debug.Log(collision.name);
+        if (collision.gameObject.tag == "Player")
         {
-            Destroy(this);
+            
+            Destroy(gameObject);
             FrogController player = GameManager.Instance.GetPlayer();
-
+            player.ChangeAnimation(player.eatingAnim);
             //Play anim
 
             //Add Score
@@ -104,7 +98,7 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
     {
         CancelInvoke(nameof(EnableCanMove));
         //bCanMove=false;
-        bIsGrabbed = true;
+        //bIsGrabbed = true;
 
     }
 }

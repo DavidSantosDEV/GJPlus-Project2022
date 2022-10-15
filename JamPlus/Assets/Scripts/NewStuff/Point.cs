@@ -9,7 +9,11 @@ public class Point : MonoBehaviour
     bool bIsFirstSelectables;
     [SerializeField]
     List<Point> nextPoints = new List<Point>();
-    
+    [SerializeField]
+    private bool bIsEndPoint = false;
+    [SerializeField]
+    private SpriteRenderer RippleSprite;
+
     bool bIsUsed = false;
     public virtual void OnLeave()
     {
@@ -28,7 +32,11 @@ public class Point : MonoBehaviour
 
     public virtual void OnPlayerEntered()
     {
-
+        ToggleSelected(false);
+        if (bIsEndPoint)
+        {
+            //GANHOUUUU
+        }
     }
 
     public void SetUsed()
@@ -52,6 +60,6 @@ public class Point : MonoBehaviour
 
     public void ToggleSelected(bool bNewValue)
     {
-
+        RippleSprite?.gameObject.SetActive(bNewValue);
     }
 }
