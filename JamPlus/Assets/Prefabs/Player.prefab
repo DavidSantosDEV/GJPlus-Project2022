@@ -174,12 +174,12 @@ SpriteRenderer:
   m_SortingLayerID: -1030369291
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fdc3b3f9ebf055846a3a073fcaf1f4e3, type: 3}
+  m_Sprite: {fileID: -951192360, guid: 05ffbb2f82b1e8b4f83612e765f11d4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -195,7 +195,7 @@ Animator:
   m_GameObject: {fileID: 5716464713194393486}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 70702648f4e69ba47bd068861f5e8eb1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -217,8 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839fdb9882ec6fb47a5925d3e2e41d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMovement: 14
-  SpeedAir: 8
+  SpeedMovement: 8
+  SpeedAir: 10
   GravityFalling: 4.5
   GravityDefault: 3
   jumpForce: 15
@@ -227,6 +227,8 @@ MonoBehaviour:
   jumpInfluenceTime: 3
   MaxProjectiles: 3
   TongueStart: {fileID: 5687744976280410640}
+  tongueLenght: 10
+  TongueSpeed: 1
   feetPositions:
   - {fileID: 213233046}
   - {fileID: 213233046}

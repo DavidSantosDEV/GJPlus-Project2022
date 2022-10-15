@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviour
     private Transform TongueStart;
     [SerializeField]
     private float tongueLenght;
+    [SerializeField]
+    float TongueSpeed = 0;
+
+    float currentTongueLenght = 0;
 
     [Header("Grounding")]
     [SerializeField]
@@ -66,10 +70,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastNonZeroDirection;
     private Vector2 SetJumpDirection;
 
-    private readonly int RunAnim = 1;
-    private readonly int JumpAnim = 2;
-    private readonly int idleAnim = 3;
-    private readonly int fallingAnim = 3;
+    private readonly int RunAnim = Animator.StringToHash("Running");
+    private readonly int JumpAnim = Animator.StringToHash("Jumping");
+    private readonly int idleAnim = Animator.StringToHash("Idle");
+    private readonly int fallingAnim = Animator.StringToHash("Falling");
 
     private void Awake()
     {
@@ -121,19 +125,23 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case PlayerState.Grounded:
-                if (InputSource.Gameplay.Jump.triggered)
+
+                if (!GetHasTongueOut())
                 {
-                    ChangePlayerState(PlayerState.Jumping);
-                    _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Vector2.up.y * jumpForce);
-                    currentJumpInfluenceTime = jumpInfluenceTime;
-                    Debug.Log(_rigidBody.velocity);
-                    jumpTime = jumpStartTime;
+                    if (InputSource.Gameplay.Jump.triggered)
+                    {
+                        ChangePlayerState(PlayerState.Jumping);
+                        _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, Vector2.up.y * jumpForce);
+                        currentJumpInfluenceTime = jumpInfluenceTime;
+                        Debug.Log(_rigidBody.velocity);
+                        jumpTime = jumpStartTime;
+                    }
                 }
+
 
                 if (InputSource.Gameplay.Tongue.IsPressed())
                 {
-                    float currentTongueLenght=0;
-                    float TongueSpeed=0;
+
                     if (_lineRenderer.positionCount>0)
                     {
                         if (currentTongueLenght<tongueLenght)
@@ -141,16 +149,15 @@ public class PlayerController : MonoBehaviour
                             currentTongueLenght += Time.deltaTime* TongueSpeed;
                             currentTongueLenght = Mathf.Clamp(currentTongueLenght, 0, tongueLenght);
                         }
-
-
+                        _lineRenderer.SetPosition(0, TongueStart.transform.position);
+                        Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
 
                         _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
-
                     }
                     else
                     {
                         _lineRenderer.SetPosition(0, TongueStart.transform.position);
-                        Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * tongueLenght);
+                        Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
                         _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
                     }
                     
@@ -158,8 +165,20 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    Vector3[] vals = { Vector3.zero, Vector3.zero};
-                    _lineRenderer.SetPositions(vals);
+                    if (currentTongueLenght > 0)
+                    {
+                        currentTongueLenght -= Time.deltaTime * TongueSpeed;
+                        Mathf.Clamp(currentTongueLenght, 0, currentTongueLenght);
+                        _lineRenderer.SetPosition(0, TongueStart.transform.position);
+                        Vector3 pos = transform.TransformPoint(TongueStart.localPosition * Vector2.right * currentTongueLenght);
+                        _lineRenderer.SetPosition(1, new Vector3(pos.x, TongueStart.transform.position.y, TongueStart.transform.position.z));
+                    }
+                    else
+                    {
+                        Vector3[] vals = { Vector3.zero, Vector3.zero };
+                        _lineRenderer.SetPositions(vals);
+                    }
+                    
                 }
                 break;
         }
@@ -170,6 +189,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GetHasTongueOut()) return;
+
+
         Vector2 vector = InputSource.Gameplay.Movement.ReadValue<Vector2>(); //Input Vector
         if (vector != Vector2.zero && vector != Vector2.down && vector != Vector2.up)
         {
@@ -206,6 +228,7 @@ public class PlayerController : MonoBehaviour
      
     }
 
+    bool GetHasTongueOut() { return currentTongueLenght > 0; }
 
     public void ChangePlayerState(PlayerState newState)
     {
