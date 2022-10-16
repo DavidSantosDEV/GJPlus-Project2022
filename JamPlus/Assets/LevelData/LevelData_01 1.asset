@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb1875caed8c2424f98062ec73637371, type: 3}
-  m_Name: LevelData_01
+  m_Name: LevelData_01 1
   m_EditorClassIdentifier: 
-  LevelName: Level01
+  LevelName: PuzzleSceneTest
+  Stars: 3
   MovesForStar: 7
   FliesForStar: 1

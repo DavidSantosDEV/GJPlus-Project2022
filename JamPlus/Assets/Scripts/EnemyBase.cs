@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour, IEatableInterface
+public class EnemyBase : MonoBehaviour, IEatableInterface, MovingActors
 {
     [Header("Enemy Settings")]
     [SerializeField]
@@ -28,6 +28,12 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
             Debug.Log("Enemy delegate");
             transform.position = patrolPoints[0].position;
             FrogController Player = GameManager.Instance.GetPlayer();
+            if (!Player)
+            {
+                Player = FindObjectOfType<FrogController>();
+            }
+            //Player?.OnPlayerEatFLy.RemoveListener(StartMove);
+            Player?.OnPlayerJumped.RemoveListener(StartMove);
             Player?.OnPlayerJumped.AddListener(StartMove);
         }
         _rigidbody2D.velocity = Vector2.zero;
@@ -88,11 +94,9 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
             Destroy(gameObject);
             FrogController player = GameManager.Instance.GetPlayer();
             player.ChangeAnimation(player.eatingAnim);
-            player.OnPlayerEatFLy.Invoke();
-            //Play anim
 
-            //Add Score
-            GameManager.Instance.AddScoreForLevel();
+            GameManager.Instance.AddFly();
+            //Play anim
         }
     }
     public void OnGrabbed()
@@ -101,5 +105,11 @@ public class EnemyBase : MonoBehaviour, IEatableInterface
         //bCanMove=false;
         //bIsGrabbed = true;
 
+    }
+
+    public bool GetIsMoving()
+    {
+        return bIsMoving;
+        throw new System.NotImplementedException();
     }
 }

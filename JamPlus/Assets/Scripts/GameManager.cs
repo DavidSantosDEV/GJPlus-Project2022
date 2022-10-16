@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 using UnityEngine.Rendering;
 
 [System.Serializable]
@@ -50,18 +51,11 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(this);
-        }
-
-        Player = FindObjectOfType<FrogController>();
-        if (Player)
-        {
-            Player.OnPlayerJumped.AddListener(AddJump);
-            Player.OnPlayerEatFLy.AddListener(AddFly);
+            Destroy(gameObject);
         }
     }
 
@@ -69,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentLevelMovesDone++;
     }
-    void AddFly()
+    public void AddFly()
     {
         CurrentLevelFliesEaten++;
     }
@@ -89,6 +83,8 @@ public class GameManager : MonoBehaviour
                 }
             }
             LoadGameplayData();
+            UIManager.Instance.HideMenu();
+            UIManager.Instance.ShowGameplayScreen();
         }
     }
 
@@ -103,18 +99,27 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void NextLevel()
+    public bool CanMove()
     {
-        currentLevelIndex++;
-        if (currentLevelIndex<=AllLevels.Count-1)
+        var actors = FindObjectsOfType<MonoBehaviour>().OfType<MovingActors>();
+        foreach (MovingActors act in actors)
         {
-            LoadNewLevel(currentLevelIndex);
+            if (act!=null)
+            {
+                if (act.GetIsMoving())
+                {
+                    return false;
+                }
+            }
+
         }
+        return true;
     }
 
     public void LoadNewLevel(int index)
     {
         LevelData levelData = AllLevels[index];
+        ResetLevelData();
         StartCoroutine(LoadSceneAsync(levelData.LevelName));
     }
 
@@ -138,8 +143,16 @@ public class GameManager : MonoBehaviour
     {
         if (IsGameplayLevel(currentScene))
         {
+            UIManager.Instance.HideMenu();
             ResetLevelData();
             LoadGameplayData();
+            UIManager.Instance.HideAllGameplayStuff();
+            UIManager.Instance.ShowGameplayScreen();
+        }
+        else
+        {
+            UIManager.Instance.HideAllGameplayStuff();
+            UIManager.Instance.ShowMainMenu();
         }
     }
 
@@ -161,6 +174,12 @@ public class GameManager : MonoBehaviour
             Point startPoint = GetStartingPoint();
             Player?.SetCurrentPoint(startPoint);
             Player.transform.position = startPoint.transform.position;
+
+            Player.OnPlayerJumped.RemoveListener(AddFly);
+            Player.OnPlayerJumped.RemoveListener(AddJump);
+
+            Player.OnPlayerJumped.AddListener(AddJump);
+            Player.OnPlayerEatFLy.AddListener(AddFly);
         }
     }
 
@@ -178,6 +197,26 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+
+    public void PlayFromStart()
+    {
+        ResetLevelData();
+        currentLevelIndex = 0;
+        if (AllLevels.Count>0)
+        {
+            LoadNewLevel(currentLevelIndex);
+        }
+        
+    }
+
+    public void NextLevel()
+    {
+        currentLevelIndex++;
+        if (currentLevelIndex <= AllLevels.Count - 1)
+        {
+            LoadNewLevel(currentLevelIndex);
+        }
+    }
 
     bool IsGameplayLevel(Scene next)
     {
