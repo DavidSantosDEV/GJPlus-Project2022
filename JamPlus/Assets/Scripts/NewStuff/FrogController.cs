@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-public class FrogController : MonoBehaviour
+public class FrogController : MonoBehaviour, MovingActors
 {
 
     [Header("Player Settings")]
@@ -103,6 +103,10 @@ public class FrogController : MonoBehaviour
 
     public void ChoseThis(Point thePoint)
     {
+        if (!GameManager.Instance.CanMove())
+        {
+            return;
+        }
         if (bIsMoving) return;
         if (CurrentPoint)
         {
@@ -170,4 +174,9 @@ public class FrogController : MonoBehaviour
         gameObject.transform.localScale = value.x < 0 ? Vector2.one : new Vector2(-1, 1);
     }
 
+    public bool GetIsMoving()
+    {
+        return bIsMoving;
+        throw new System.NotImplementedException();
+    }
 }

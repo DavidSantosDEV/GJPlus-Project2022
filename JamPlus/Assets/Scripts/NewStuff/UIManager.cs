@@ -24,11 +24,11 @@ public class UIManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
@@ -75,9 +75,19 @@ public class UIManager : MonoBehaviour
         _VictoryScreen.SetActive(false);
         if(GameOverScreen)GameOverScreen.SetActive(false);
     }
+    public void HideMenu()
+    {
+        mainMenuScreen.SetActive(false);
+    }
+
+    public void ShowGameplayScreen()
+    {
+
+        gameplayScreen.SetActive(true);
+    }
 
     public void ShowMainMenu()
     {
-
+        mainMenuScreen.SetActive(true);
     }
 }

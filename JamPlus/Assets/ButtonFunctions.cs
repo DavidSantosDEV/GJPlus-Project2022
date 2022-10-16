@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class ButtonFunctions : MonoBehaviour
 {
+    public void PlayButton()
+    {
+        GameManager.Instance.PlayFromStart();
+    }
+
     public void NextLevelButton()
     {
-
+        GameManager.Instance.NextLevel();
     }
 
     public void RetryButtonm()

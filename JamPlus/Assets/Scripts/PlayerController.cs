@@ -17,7 +17,7 @@ public enum PlayerState
     ImportantAnim,
 }
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, MovingActors
 {
 
 
@@ -402,5 +402,10 @@ public class PlayerController : MonoBehaviour
         newProjectile.SetActive(false);
 
         return true;
+    }
+
+    public bool GetIsMoving()
+    {
+        throw new System.NotImplementedException();
     }
 }

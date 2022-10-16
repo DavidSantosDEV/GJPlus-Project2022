@@ -20,6 +20,17 @@ public class Point : MonoBehaviour
     [SerializeField]
     bool OnLeaveDeactivate = false;
 
+    List<Point> BlockedPaths= new List<Point>();
+
+    public void SetBlocked(List<Point> paths)
+    {
+        BlockedPaths = paths;
+    }
+
+    public bool GetBlocked(Point here) {
+        return BlockedPaths.Contains(here); 
+    }
+
     public virtual void OnLeave()
     {
         if (OnLeaveDeactivate)
@@ -64,7 +75,7 @@ public class Point : MonoBehaviour
         List<Point> points = new List<Point>();
         foreach (Point p in nextPoints)
         {
-            if (p.gameObject.activeSelf)
+            if (p.gameObject.activeSelf && !GetBlocked(p))
             {
                 points.Add(p);
             }
