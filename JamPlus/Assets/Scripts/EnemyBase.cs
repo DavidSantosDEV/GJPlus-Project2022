@@ -20,14 +20,20 @@ public class EnemyBase : MonoBehaviour, IEatableInterface, MovingActors
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
+    Collider2D myCol;
 
     private void Start()
     {
+        myCol= GetComponent<Collider2D>();
         if (patrolPoints.Count>=2)
         {
             Debug.Log("Enemy delegate");
             transform.position = patrolPoints[0].position;
             FrogController Player = GameManager.Instance.GetPlayer();
+            if (!Player)
+            {
+                Player = FindObjectOfType<FrogController>();
+            }
             //Player?.OnPlayerEatFLy.RemoveListener(StartMove);
             Player?.OnPlayerJumped.RemoveListener(StartMove);
             Player?.OnPlayerJumped.AddListener(StartMove);
@@ -61,6 +67,22 @@ public class EnemyBase : MonoBehaviour, IEatableInterface, MovingActors
         }
 
         bIsMoving = false;
+        List<Collider2D> colliders = new List<Collider2D>();
+        Physics2D.OverlapCollider(myCol, new ContactFilter2D(), colliders);
+        if (colliders.Count>0)
+        {
+            foreach (Collider2D col in colliders)
+            {
+                if (col.gameObject.tag == "Player")
+                {
+                    Destroy(gameObject);
+                    FrogController player = GameManager.Instance.GetPlayer();
+                    player.ChangeAnimation(player.eatingAnim);
+
+                    GameManager.Instance.AddFly();
+                }
+            }
+        }
     }
 
     void FixedUpdate()
@@ -83,6 +105,7 @@ public class EnemyBase : MonoBehaviour, IEatableInterface, MovingActors
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(bIsMoving) return;
         Debug.Log(collision.name);
         if (collision.gameObject.tag == "Player")
         {

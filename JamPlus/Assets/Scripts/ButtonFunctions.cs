@@ -16,7 +16,7 @@ public class ButtonFunctions : MonoBehaviour
 
     public void RetryButtonm()
     {
-
+        GameManager.Instance.ReloadCurrent();
     }
 
     public void MainMenuButton()

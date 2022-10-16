@@ -3,20 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PointAndBlockingWho
+public class PointAndPaths
 {
-    public Transform location;
-    public Point BlockMe;
-    public List<Point> Paths= new List<Point>();
+    [SerializeField]
+    private Point BlockMe;
+    [SerializeField]
+    private List<Point> Paths = new List<Point>();
 
-    public void BlockPaths()
+    public void Block()
     {
         BlockMe.SetBlocked(Paths);
     }
 
-    public void UnBlockPaths()
+    public void UnBlock()
     {
         BlockMe.SetBlocked(new List<Point>());
+    }
+}
+
+[System.Serializable]
+public class PointAndBlockingWho
+{
+    public Transform location;
+    public List<PointAndPaths> BlockList;
+    public void BlockPaths()
+    {
+
+        foreach (PointAndPaths b in BlockList)
+        {
+            b.Block();
+        }
+    }
+
+    public void UnBlockPaths()
+    {
+        foreach (PointAndPaths b in BlockList)
+        {
+            b.UnBlock();
+        }
     }
 }
 
