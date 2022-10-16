@@ -192,8 +192,12 @@ public class GameManager : MonoBehaviour
         if (AllLevels[currentLevelIndex])
         {
             AllLevels[currentLevelIndex].SetIsFinished();
-            AllLevels[currentLevelIndex].CalculateStars(CurrentLevelFliesEaten, CurrentLevelMovesDone);
+            int stars = AllLevels[currentLevelIndex].CalculateStars(CurrentLevelFliesEaten, CurrentLevelMovesDone);
+            UIManager.Instance?.ShowGameWon(stars);
         }
+
+        
+
         Debug.Log("Level completed!");
     }
 

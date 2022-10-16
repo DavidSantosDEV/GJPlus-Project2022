@@ -13,10 +13,20 @@ public class Point : MonoBehaviour
     private bool bIsEndPoint = false;
     [SerializeField]
     private SpriteRenderer RippleSprite;
+    [SerializeField]
+    private 
 
     bool bIsUsed = false;
+    [SerializeField]
+    bool OnLeaveDeactivate = false;
+
     public virtual void OnLeave()
     {
+        if (OnLeaveDeactivate)
+        {
+            gameObject.SetActive(false);
+
+        }
         //Play Anim
         //Destroy
     }
@@ -49,7 +59,17 @@ public class Point : MonoBehaviour
 
     public bool GetIsUsed() { return bIsUsed; }
     
-    public List<Point> GetNextPoints() { return nextPoints; }
+    public List<Point> GetNextPoints() {
+        List<Point> points = new List<Point>();
+        foreach (Point p in nextPoints)
+        {
+            if (p.gameObject.activeSelf)
+            {
+                points.Add(p);
+            }
+        }
+        return points; 
+    }
 
 
     private void OnMouseDown()
