@@ -77,6 +77,12 @@ MonoBehaviour:
   RippleSprite: {fileID: 2531628318002631416}
   sinking: {fileID: 6078476492221524122}
   OnLeaveDeactivate: 0
+  audioDestroy:
+    audio: {fileID: 8300000, guid: 908689ad07c8e0e4bb90f8e2b45c94d4, type: 3}
+    volume: 0.2
+  audioEnter:
+    audio: {fileID: 0}
+    volume: 0
 --- !u!212 &548638012264968792
 SpriteRenderer:
   m_ObjectHideFlags: 0

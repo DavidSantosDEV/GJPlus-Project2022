@@ -408,6 +408,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 548638012264968792, guid: 2749f07fb951eff498056f650112e372, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -795311248, guid: a804fbf0d98496e4eb11ad7caf242d7a, type: 3}
     - target: {fileID: 548638012264968793, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: m_Name
       value: FrogPoint (3)
@@ -4808,6 +4812,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrogPoint_Vanish Variant (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 800434608130416087, guid: c165bca7ba119ee4da9b4083b1c5da4f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -347802810, guid: 724269c47049f994bb2fc0809555201f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c165bca7ba119ee4da9b4083b1c5da4f, type: 3}
 --- !u!114 &596525160 stripped
@@ -4888,6 +4896,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrogPoint_Vanish Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 800434608130416087, guid: c165bca7ba119ee4da9b4083b1c5da4f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1349056824, guid: 724269c47049f994bb2fc0809555201f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c165bca7ba119ee4da9b4083b1c5da4f, type: 3}
 --- !u!114 &640982129 stripped
@@ -5259,6 +5271,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 548638012264968792, guid: 2749f07fb951eff498056f650112e372, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -426477560, guid: a804fbf0d98496e4eb11ad7caf242d7a, type: 3}
     - target: {fileID: 548638012264968793, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: m_Name
       value: FrogPoint (6)

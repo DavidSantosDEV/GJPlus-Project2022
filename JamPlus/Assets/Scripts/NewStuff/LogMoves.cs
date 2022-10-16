@@ -79,7 +79,7 @@ public class LogMoves : MonoBehaviour, MovingActors
                 currentIndex = 0;
             }
             LogPoints[currentIndex].BlockPaths();
-            Invoke(nameof(Begin), 1);
+            Invoke(nameof(Begin), .2f);
         }
         
     }

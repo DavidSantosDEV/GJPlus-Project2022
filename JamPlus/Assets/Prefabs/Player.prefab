@@ -172,9 +172,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1030369291
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -951192360, guid: 05ffbb2f82b1e8b4f83612e765f11d4a, type: 3}
+  m_Sprite: {fileID: 1209639840, guid: 05ffbb2f82b1e8b4f83612e765f11d4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -222,13 +222,16 @@ MonoBehaviour:
   GravityFalling: 4.5
   GravityDefault: 3
   jumpForce: 15
-  fStrenghtOffsetInput: 0.1
   jumpStartTime: 0.3
   jumpInfluenceTime: 3
   MaxProjectiles: 3
   TongueStart: {fileID: 5687744976280410640}
   tongueLenght: 10
   TongueSpeed: 1
+  TongueCheckSize: 5
+  GrabbableLayers:
+    serializedVersion: 2
+    m_Bits: 0
   feetPositions:
   - {fileID: 213233046}
   - {fileID: 213233046}
@@ -312,7 +315,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1030369291
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}

@@ -21,7 +21,10 @@ public class Point : MonoBehaviour
     [SerializeField]
     bool OnLeaveDeactivate = false;
 
-
+    [SerializeField]
+    private AudioAndVolume audioDestroy;
+    [SerializeField]
+    private AudioAndVolume audioEnter;
 
     List<Point> BlockedPaths= new List<Point>();
 
@@ -42,7 +45,7 @@ public class Point : MonoBehaviour
         {
             sinking?.gameObject.SetActive(true);
             sinking?.PlayAnim();
-
+            GameManager.Instance.PlaySoundEffect(audioDestroy);
         }
         //Play Anim
         //Destroy
@@ -62,6 +65,7 @@ public class Point : MonoBehaviour
         ToggleSelected(false);
         if (bIsEndPoint)
         {
+            GameManager.Instance.PlaySoundEffect(audioEnter);
             Invoke(nameof(FinishGame), waitTime);
             
             //GANHOUUUU

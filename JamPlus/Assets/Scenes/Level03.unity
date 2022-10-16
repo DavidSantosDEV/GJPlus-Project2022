@@ -340,6 +340,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 548638012264968792, guid: 2749f07fb951eff498056f650112e372, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1641802188, guid: a804fbf0d98496e4eb11ad7caf242d7a, type: 3}
     - target: {fileID: 548638012264968793, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: m_Name
       value: FrogPoint (6)
@@ -4452,6 +4456,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 548638012264968792, guid: 2749f07fb951eff498056f650112e372, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -795311248, guid: a804fbf0d98496e4eb11ad7caf242d7a, type: 3}
     - target: {fileID: 548638012264968793, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: m_Name
       value: FrogPoint (3)
@@ -4776,6 +4784,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 548638012264968792, guid: 2749f07fb951eff498056f650112e372, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1641802188, guid: a804fbf0d98496e4eb11ad7caf242d7a, type: 3}
     - target: {fileID: 548638012264968793, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: m_Name
       value: FrogPoint (2)
@@ -9291,6 +9303,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 548638012264968792, guid: 2749f07fb951eff498056f650112e372, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -795311248, guid: a804fbf0d98496e4eb11ad7caf242d7a, type: 3}
     - target: {fileID: 548638012264968793, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: m_Name
       value: FrogPoint (7)

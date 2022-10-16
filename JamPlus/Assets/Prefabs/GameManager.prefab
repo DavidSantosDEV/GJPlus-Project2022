@@ -49,6 +49,9 @@ MonoBehaviour:
   AllLevels:
   - {fileID: 11400000, guid: 4e75c4473b41e6e488b51a7348c92ad1, type: 2}
   DebugEditorMode: 1
+  SoundVictory:
+    audio: {fileID: 8300000, guid: 87959f6abbaecbd49b46ead46fc4f8ce, type: 3}
+    volume: 0.2
 --- !u!82 &1202794506
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61,7 +64,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1b11e1cdf2a0bde459a47f6acfbad6db, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0

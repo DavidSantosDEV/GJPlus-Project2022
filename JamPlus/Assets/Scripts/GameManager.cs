@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool DebugEditorMode=false;
 
+    [SerializeField]
+    AudioAndVolume SoundVictory;
 
     private int CurrentLevelFliesEaten;
     private int CurrentLevelMovesDone = 0;
@@ -46,6 +48,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { private set; get; }
 
     public float GetMovementSpeed() { return MovementSpeed; }
+
+    private AudioSource SourceSFX;
+
     private void Awake()
     {
         if (Instance == null)
@@ -57,6 +62,16 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+        SourceSFX = gameObject.AddComponent<AudioSource>();
+        SourceSFX.spatialBlend = 0;
+    }
+
+
+    public void PlaySoundEffect(AudioAndVolume clip)
+    {
+        SourceSFX.PlayOneShot(clip.audio,clip.volume);
     }
 
     void AddJump()
@@ -251,6 +266,8 @@ public class GameManager : MonoBehaviour
     {
         if (AllLevels[currentLevelIndex])
         {
+            
+            PlaySoundEffect(SoundVictory);
             AllLevels[currentLevelIndex].SetIsFinished();
             int stars = AllLevels[currentLevelIndex].CalculateStars(CurrentLevelFliesEaten, CurrentLevelMovesDone);
 

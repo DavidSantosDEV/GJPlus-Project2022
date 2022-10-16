@@ -5,22 +5,31 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
+[System.Serializable]
+public class AudioAndVolume
+{
+    public AudioClip audio;
+    public float volume;
+}
+
 public class FrogController : MonoBehaviour, MovingActors
 {
 
     [Header("Player Settings")]
+    [SerializeField]
+    AudioAndVolume jumpSound;
+    [SerializeField]
+    AudioAndVolume eatSound;
+    [SerializeField]
+    AudioAndVolume swimSound;
+
 
     bool bIsMoving = false;
-
     private PlayerActions playerInput;
-
     int SelectedIndex = 0;
-
     Point CurrentPoint;
-
     public UnityEvent OnPlayerJumped;
     public UnityEvent OnPlayerEatFLy;
-
     private Animator _animator;
 
     int currentAnim;
@@ -30,7 +39,7 @@ public class FrogController : MonoBehaviour, MovingActors
     public readonly int eatingAnim = Animator.StringToHash("Eating");
     public readonly int moonAnim = Animator.StringToHash("Moon");
 
-
+    AudioSource audioPlayer;
     private void Awake()
     {
         playerInput = new PlayerActions();
@@ -41,9 +50,15 @@ public class FrogController : MonoBehaviour, MovingActors
         _animator = GetComponent<Animator>();
         //playerInput.Selection.Selection.started += OnSelectionChanged;
         //playerInput.Selection.MoveTo.started += ChosePath;
+
+        audioPlayer = gameObject.AddComponent<AudioSource>();
+        audioPlayer.spatialBlend = 0;
     }
 
-
+    public void PlaySwimSound()
+    {
+        audioPlayer.PlayOneShot(swimSound.audio,swimSound.volume);
+    }
     public void ChangeAnimation(int animation)
     {
         if (currentAnim == animation)
@@ -55,6 +70,13 @@ public class FrogController : MonoBehaviour, MovingActors
             return;
         }
         if (currentAnim == moonAnim) return;
+
+        if (animation == eatingAnim)
+        {
+            //audioPlayer.PlayOneShot(eatSound.audio,eatSound.volume);
+            GameManager.Instance.PlaySoundEffect(eatSound);
+        }
+
         currentAnim = animation;
         _animator?.CrossFade(animation, 0f, 0);
     }
@@ -103,9 +125,9 @@ public class FrogController : MonoBehaviour, MovingActors
         SelectedIndex = 0;
     }
 
-    
     private IEnumerator MoveTowards(Point point)
-    {
+    {   
+        GameManager.Instance.PlaySoundEffect(jumpSound);
         bIsMoving=true;
         float Value=0f;
         Vector2 originalPosition = transform.position;

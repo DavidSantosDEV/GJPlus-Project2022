@@ -272,6 +272,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa89e1eb6aaef1f4aac9d96f9a3b2042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpSound:
+    audio: {fileID: 8300000, guid: 93520f1dae87bdb48b39a2de249edd6c, type: 3}
+    volume: 0.2
+  eatSound:
+    audio: {fileID: 8300000, guid: 6f4c2cde876b8f945bb9b66f72b7b214, type: 3}
+    volume: 0.2
+  swimSound:
+    audio: {fileID: 8300000, guid: dfa69712709e58a41973f581ab28897e, type: 3}
+    volume: 0.2
   OnPlayerJumped:
     m_PersistentCalls:
       m_Calls: []
