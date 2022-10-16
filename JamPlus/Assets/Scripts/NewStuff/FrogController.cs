@@ -28,6 +28,7 @@ public class FrogController : MonoBehaviour, MovingActors
     public readonly int jumpAnim = Animator.StringToHash("Jumping");
     public readonly int idleAnim = Animator.StringToHash("Idle");
     public readonly int eatingAnim = Animator.StringToHash("Eating");
+    public readonly int moonAnim = Animator.StringToHash("Moon");
 
 
     private void Awake()
@@ -53,6 +54,7 @@ public class FrogController : MonoBehaviour, MovingActors
         {
             return;
         }
+        if (currentAnim == moonAnim) return;
         currentAnim = animation;
         _animator?.CrossFade(animation, 0f, 0);
     }
@@ -154,7 +156,7 @@ public class FrogController : MonoBehaviour, MovingActors
         float Value=0f;
         Vector2 originalPosition = transform.position;
         CheckFlipping(originalPosition,selectedPoint.transform.position);
-        ChangeAnimation(jumpAnim);
+        ChangeAnimation(selectedPoint.GetIsFinal()? moonAnim : jumpAnim);
         while (Value<1)
         {
             Value += Time.deltaTime * GameManager.Instance.GetMovementSpeed();

@@ -217,7 +217,14 @@ public class GameManager : MonoBehaviour
             LoadNewLevel(currentLevelIndex);
         }
     }
-
+    public void ReloadCurrent()
+    {
+        if (AllLevels.Count <= 0) return;
+        if (AllLevels[currentLevelIndex])
+        {
+            LoadNewLevel(currentLevelIndex);
+        }
+    }
     bool IsGameplayLevel(Scene next)
     {
         foreach (LevelData levelData in AllLevels)

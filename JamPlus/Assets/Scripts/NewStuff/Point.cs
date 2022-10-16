@@ -12,13 +12,16 @@ public class Point : MonoBehaviour
     [SerializeField]
     private bool bIsEndPoint = false;
     [SerializeField]
+    private float waitTime = 3f;
+    [SerializeField]
     private SpriteRenderer RippleSprite;
     [SerializeField]
     private WaterPoint sinking;
-
     bool bIsUsed = false;
     [SerializeField]
     bool OnLeaveDeactivate = false;
+
+
 
     List<Point> BlockedPaths= new List<Point>();
 
@@ -30,6 +33,8 @@ public class Point : MonoBehaviour
     public bool GetBlocked(Point here) {
         return BlockedPaths.Contains(here); 
     }
+
+    public bool GetIsFinal() { return bIsEndPoint; }
 
     public virtual void OnLeave()
     {
@@ -57,9 +62,15 @@ public class Point : MonoBehaviour
         ToggleSelected(false);
         if (bIsEndPoint)
         {
-            GameManager.Instance?.LevelComplete();
+            Invoke(nameof(FinishGame), waitTime);
+            
             //GANHOUUUU
         }
+    }
+
+    void FinishGame()
+    {
+        GameManager.Instance?.LevelComplete();
     }
 
     public void SetUsed()
