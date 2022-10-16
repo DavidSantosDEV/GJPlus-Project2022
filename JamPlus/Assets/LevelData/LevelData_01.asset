@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1875caed8c2424f98062ec73637371, type: 3}
   m_Name: LevelData_01
   m_EditorClassIdentifier: 
-  LevelName: PuzzleSceneTest
-  Stars: 3
+  LevelName: Level01
   MovesForStar: 7
   FliesForStar: 1

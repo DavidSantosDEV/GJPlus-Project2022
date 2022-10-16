@@ -9,7 +9,7 @@ public class LevelData : ScriptableObject
     
     private bool IsFinished=false;
 
-    public int Stars =0;
+    private int Stars =0;
 
     public int MovesForStar = 1;
     
