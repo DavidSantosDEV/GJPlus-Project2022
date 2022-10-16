@@ -13,9 +13,14 @@ public class WaterPoint : MonoBehaviour
         myAnim = GetComponent<Animator>();
     }
 
+    private void OnEnable()
+    {
+        myAnim = GetComponent<Animator>();
+    }
+
     public void PlayAnim()
     {
-
+        myAnim.CrossFade(anim, 0, 0);
     }
 
     // Update is called once per frame

@@ -12,6 +12,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject GameOverScreen;
 
+    [SerializeField]
+    private GameObject gameplayScreen;
+
+    [SerializeField]
+    private GameObject mainMenuScreen;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -28,6 +35,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _VictoryScreen.SetActive(false);
+        //gameplayScreen.SetActive(false);
     }
 
     public void ShowGameOver()
@@ -35,13 +43,18 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void ShowGameWon(int starsWon)
+    public void ShowGameWon(int starsWon, bool bHasNextLevel, int MosquitosEaten, int MosquitosNeeded, int MovesDone, int MovesNeeded)
     {
+        gameplayScreen?.SetActive(false);
+        Debug.Log("Showing Stars: " + starsWon);
+        Debug.Log(bHasNextLevel ? "Has next Level" : "No Next Level");
         _VictoryScreen.SetActive(true);
         VictoryScreen vc = _VictoryScreen.GetComponent<VictoryScreen>();
         if (vc)
         {
-
+            vc.SetStars(starsWon);
+            vc.SetHasNextLevel(bHasNextLevel);
+            vc.SetTexts(MosquitosEaten, MosquitosNeeded, MovesDone, MovesNeeded);
         }
     }
     public void ShowNextLevel(string nextLevel)
@@ -52,6 +65,18 @@ public class UIManager : MonoBehaviour
         }
     }
     void ShowToMainMenu()
+    {
+
+    }
+
+    public void HideAllGameplayStuff()
+    {
+        gameplayScreen.SetActive(false);
+        _VictoryScreen.SetActive(false);
+        if(GameOverScreen)GameOverScreen.SetActive(false);
+    }
+
+    public void ShowMainMenu()
     {
 
     }

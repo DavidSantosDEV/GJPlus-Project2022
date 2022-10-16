@@ -14,7 +14,7 @@ public class Point : MonoBehaviour
     [SerializeField]
     private SpriteRenderer RippleSprite;
     [SerializeField]
-    private 
+    private WaterPoint sinking;
 
     bool bIsUsed = false;
     [SerializeField]
@@ -24,7 +24,8 @@ public class Point : MonoBehaviour
     {
         if (OnLeaveDeactivate)
         {
-            gameObject.SetActive(false);
+            sinking?.gameObject.SetActive(true);
+            sinking?.PlayAnim();
 
         }
         //Play Anim

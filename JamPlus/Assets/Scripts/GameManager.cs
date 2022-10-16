@@ -92,6 +92,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OpenMainMenu()
+    {
+        Debug.Log("Opening Main Menu");
+
+        StartCoroutine(LoadSceneAsync("MainMenu"));
+        //SceneManager.LoadScene("MainMenu");
+        UIManager.Instance.HideAllGameplayStuff();
+        UIManager.Instance.ShowMainMenu();
+        
+    }
 
     public void NextLevel()
     {
@@ -193,7 +203,8 @@ public class GameManager : MonoBehaviour
         {
             AllLevels[currentLevelIndex].SetIsFinished();
             int stars = AllLevels[currentLevelIndex].CalculateStars(CurrentLevelFliesEaten, CurrentLevelMovesDone);
-            UIManager.Instance?.ShowGameWon(stars);
+
+            UIManager.Instance?.ShowGameWon(stars, currentLevelIndex < (AllLevels.Count-1),CurrentLevelFliesEaten, AllLevels[currentLevelIndex].FliesForStar, CurrentLevelMovesDone, AllLevels[currentLevelIndex].MovesForStar);
         }
 
         
