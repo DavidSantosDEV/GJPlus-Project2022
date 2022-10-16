@@ -128,12 +128,16 @@ PrefabInstance:
       objectReference: {fileID: -923701530, guid: 0ee1a135bcbcfcd49b761e74ba81390b, type: 3}
     - target: {fileID: 548638012264968792, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: m_Color.a
-      value: 0.50980395
+      value: 0.39215687
       objectReference: {fileID: 0}
     - target: {fileID: 548638012264968793, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: m_Name
-      value: FrogPoint_End
+      value: FrogPoint_End Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 548638012264968794, guid: 2749f07fb951eff498056f650112e372, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 580df5ac03f210840875046fbe0c541e, type: 2}
     - target: {fileID: 548638012264968795, guid: 2749f07fb951eff498056f650112e372, type: 3}
       propertyPath: waitTime
       value: 1

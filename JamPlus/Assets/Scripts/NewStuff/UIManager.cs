@@ -92,6 +92,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowMainMenu()
     {
+        UIManager.Instance.HideAllGameplayStuff();
         mainMenuScreen.SetActive(true);
     }
 }

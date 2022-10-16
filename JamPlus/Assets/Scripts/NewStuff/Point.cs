@@ -93,6 +93,7 @@ public class Point : MonoBehaviour
         }
         return points; 
     }
+    public List<Point> GetNextPointNoModifiers() { return nextPoints; }
 
 
     private void OnMouseDown()

@@ -86,6 +86,10 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.HideMenu();
             UIManager.Instance.ShowGameplayScreen();
         }
+        else
+        {
+            UIManager.Instance.ShowMainMenu();
+        }
     }
 
     public void OpenMainMenu()

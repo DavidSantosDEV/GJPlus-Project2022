@@ -71,29 +71,28 @@ public class LogMoves : MonoBehaviour, MovingActors
     void StartMove()
     {
         if(LogPoints.Count >= 2)
+        {
+            LogPoints[currentIndex].UnBlockPaths();
+            currentIndex++;
+            if (currentIndex > LogPoints.Count - 1)
+            {
+                currentIndex = 0;
+            }
+            LogPoints[currentIndex].BlockPaths();
+            Invoke(nameof(Begin), 1);
+        }
+        
+    }
+    void Begin()
+    {
         StartCoroutine(MoveRoutine());
     }
-
     private IEnumerator MoveRoutine()
     {
         bIsMoving = true;
 
         Vector2 originalposition = transform.position;
         float t=0;
-
-        LogPoints[currentIndex].UnBlockPaths();
-        
-
-        currentIndex++;
-
-        
-        if (currentIndex > LogPoints.Count - 1)
-        {
-            currentIndex = 0;
-        }
-
-        LogPoints[currentIndex].BlockPaths();
-
         while (t<1)
         {
             t += Time.deltaTime*GameManager.Instance.GetMovementSpeed();
