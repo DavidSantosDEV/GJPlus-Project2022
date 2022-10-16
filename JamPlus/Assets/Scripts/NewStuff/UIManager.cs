@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject mainMenuScreen;
 
+    [SerializeField]
+    private GameObject pauseMenuScreen;
 
     private void Awake()
     {
@@ -57,22 +59,23 @@ public class UIManager : MonoBehaviour
             vc.SetTexts(MosquitosEaten, MosquitosNeeded, MovesDone, MovesNeeded);
         }
     }
-    public void ShowNextLevel(string nextLevel)
+    public void ShowPauseMenu()
     {
-        if (nextLevel == "")
-        {
-            ShowToMainMenu();
-        }
+        gameplayScreen.SetActive(false);
+        pauseMenuScreen.SetActive(true);
     }
-    void ShowToMainMenu()
-    {
 
+    public void HidePauseMenuGameplay()
+    {
+        pauseMenuScreen?.SetActive(false);
+        gameplayScreen.SetActive(true);
     }
 
     public void HideAllGameplayStuff()
     {
         gameplayScreen.SetActive(false);
         _VictoryScreen.SetActive(false);
+        pauseMenuScreen?.SetActive(false);
         if(GameOverScreen)GameOverScreen.SetActive(false);
     }
     public void HideMenu()
@@ -84,6 +87,7 @@ public class UIManager : MonoBehaviour
     {
 
         gameplayScreen.SetActive(true);
+        pauseMenuScreen.SetActive(false);
     }
 
     public void ShowMainMenu()

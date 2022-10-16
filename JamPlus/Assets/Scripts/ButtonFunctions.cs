@@ -26,11 +26,11 @@ public class ButtonFunctions : MonoBehaviour
 
     public void PauseGameplayButton()
     {
-
+        UIManager.Instance.ShowPauseMenu();
     }
 
     public void ResumeButton()
     {
-
+        UIManager.Instance.HidePauseMenuGameplay();
     }
 }
