@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LevelData_05
   m_EditorClassIdentifier: 
   LevelName: 
-  MovesForStar: 1
+  MovesForStar: 10
   FliesForStar: 1
