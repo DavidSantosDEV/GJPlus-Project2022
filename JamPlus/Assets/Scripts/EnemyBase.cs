@@ -28,6 +28,10 @@ public class EnemyBase : MonoBehaviour, IEatableInterface, MovingActors
             Debug.Log("Enemy delegate");
             transform.position = patrolPoints[0].position;
             FrogController Player = GameManager.Instance.GetPlayer();
+            if (!Player)
+            {
+                Player = FindObjectOfType<FrogController>();
+            }
             //Player?.OnPlayerEatFLy.RemoveListener(StartMove);
             Player?.OnPlayerJumped.RemoveListener(StartMove);
             Player?.OnPlayerJumped.AddListener(StartMove);
