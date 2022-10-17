@@ -39,6 +39,8 @@ public class FrogController : MonoBehaviour, MovingActors
     public readonly int eatingAnim = Animator.StringToHash("Eating");
     public readonly int moonAnim = Animator.StringToHash("Moon");
 
+    public Point GetCurrent() { return CurrentPoint; }
+
     AudioSource audioPlayer;
     private void Awake()
     {
@@ -122,6 +124,11 @@ public class FrogController : MonoBehaviour, MovingActors
                 pa.ToggleSelected(true);
             }
         }
+        else
+        {
+            //No points
+            Debug.Log("No points");
+        }
         SelectedIndex = 0;
     }
 
@@ -148,6 +155,12 @@ public class FrogController : MonoBehaviour, MovingActors
         bIsMoving = false;
         ChangeAnimation(idleAnim);
         SetCurrentPoint(point);
+        Invoke(nameof(Check), 0.5f); 
+    }
+
+    void Check()
+    {
+        GameManager.Instance.CheckPoints();
     }
 
     void CheckFlipping(Vector2 posOriginal, Vector2 pos)

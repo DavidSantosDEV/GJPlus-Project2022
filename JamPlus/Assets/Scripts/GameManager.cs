@@ -179,11 +179,22 @@ public class GameManager : MonoBehaviour
     {
 
     }
-
+    List<Point> IfZeroGameOver = new List<Point>();
+    List<Point> savingPoints = new List<Point>();
     void LoadGameplayData()
     {
         LevelPoints.Clear();
         LevelPoints.AddRange(FindObjectsOfType<Point>());
+        IfZeroGameOver.Clear();
+        savingPoints.Clear();
+        foreach (Point p in LevelPoints)
+        {
+            if (p.GameOverIfVanished)
+            {
+                savingPoints.AddRange(p.savingPoints);
+                IfZeroGameOver.Add(p);
+            }
+        }
         if (!Player)
         {
             Player = FindObjectOfType<FrogController>();
@@ -200,6 +211,42 @@ public class GameManager : MonoBehaviour
             Player.OnPlayerJumped.AddListener(AddJump);
             Player.OnPlayerEatFLy.AddListener(AddFly);
         }
+    }
+
+    
+    public void RemoveFinalPoint(Point po)
+    {
+        if (IfZeroGameOver.Contains(po))
+        {
+            IfZeroGameOver.Remove(po);
+            
+        }
+    }
+
+    public void CheckPoints()
+    {
+        /*
+        if (IfZeroGameOver.Count <= 0)
+        {
+            if (!savingPoints.Contains(Player.GetCurrent()))
+            {
+
+                Invoke(nameof(ShowGameOver), 0.5f);
+            }
+            else
+            {
+                if (Player.GetCurrent().GetNextPoints().Count<=0)
+                {
+                    Invoke(nameof(ShowGameOver), 0.5f);
+                }
+            }
+        }
+        */
+    }
+
+    void ShowGameOver()
+    {
+        UIManager.Instance.ShowGameOver();
     }
 
     public int GetPointCount() { return LevelPoints.Count; }

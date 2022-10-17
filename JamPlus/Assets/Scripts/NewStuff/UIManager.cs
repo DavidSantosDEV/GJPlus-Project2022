@@ -40,11 +40,6 @@ public class UIManager : MonoBehaviour
         //gameplayScreen.SetActive(false);
     }
 
-    public void ShowGameOver()
-    {
-
-    }
-
     public void ShowGameWon(int starsWon, bool bHasNextLevel, int MosquitosEaten, int MosquitosNeeded, int MovesDone, int MovesNeeded)
     {
         gameplayScreen?.SetActive(false);
@@ -76,7 +71,7 @@ public class UIManager : MonoBehaviour
         gameplayScreen.SetActive(false);
         _VictoryScreen.SetActive(false);
         pauseMenuScreen?.SetActive(false);
-        if(GameOverScreen)GameOverScreen.SetActive(false);
+        GameOverScreen.SetActive(false);
     }
     public void HideMenu()
     {
@@ -85,9 +80,15 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameplayScreen()
     {
-
+        GameOverScreen.SetActive(false);
         gameplayScreen.SetActive(true);
         pauseMenuScreen.SetActive(false);
+    }
+
+    public void ShowGameOver()
+    {
+        HideAllGameplayStuff();
+        GameOverScreen.SetActive(true);
     }
 
     public void ShowMainMenu()

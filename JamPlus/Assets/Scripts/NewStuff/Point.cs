@@ -26,6 +26,9 @@ public class Point : MonoBehaviour
     [SerializeField]
     private AudioAndVolume audioEnter;
 
+    public bool GameOverIfVanished=false;
+    public List<Point> savingPoints = new List<Point>();
+
     List<Point> BlockedPaths= new List<Point>();
 
     public void SetBlocked(List<Point> paths)
@@ -45,6 +48,7 @@ public class Point : MonoBehaviour
         {
             sinking?.gameObject.SetActive(true);
             sinking?.PlayAnim();
+            GameManager.Instance.RemoveFinalPoint(this);
             GameManager.Instance.PlaySoundEffect(audioDestroy);
         }
         //Play Anim
