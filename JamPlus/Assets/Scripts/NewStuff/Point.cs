@@ -31,6 +31,14 @@ public class Point : MonoBehaviour
 
     List<Point> BlockedPaths= new List<Point>();
 
+    private Collider2D PointCollider;
+
+    private void Awake()
+    {
+        PointCollider = GetComponent<Collider2D>();
+    }
+
+
     public void SetBlocked(List<Point> paths)
     {
         BlockedPaths = paths;
@@ -46,6 +54,7 @@ public class Point : MonoBehaviour
     {
         if (OnLeaveDeactivate)
         {
+            if(PointCollider)PointCollider.enabled = false;
             sinking?.gameObject.SetActive(true);
             sinking?.PlayAnim();
             GameManager.Instance.RemoveFinalPoint(this);
@@ -55,13 +64,10 @@ public class Point : MonoBehaviour
         //Destroy
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    [ExecuteInEditMode]
+    public void GenerateRandomSprite()
     {
-        //if (collision.CompareTag("Player"))
-        //{
-        //    OnPlayerEntered();
-        //}
-        //
+
     }
 
     public virtual void OnPlayerEntered()
