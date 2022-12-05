@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(Point))]
-public class PointEditor : Editor
+public class PointEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {
@@ -18,3 +20,6 @@ public class PointEditor : Editor
         }
     }
 }
+
+#endif
+

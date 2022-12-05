@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60648b15631a5fd48ab97a4b5459e78f, type: 3}
+  m_Name: WheelSlotData
+  m_EditorClassIdentifier: 
+  Slots:
+  - Icon: {fileID: 1806393160, guid: d711287728246d94cbd00fe701cd0e1a, type: 3}
+    Label: Je suis
+    chance: 25
+    slotColor: {r: 1, g: 0.5130149, b: 0, a: 1}
+    reward: {fileID: 0}
+  - Icon: {fileID: 21300016, guid: 6e980baa502e72148bbc79fb42c81d10, type: 3}
+    Label: Ui
+    chance: 25
+    slotColor: {r: 1, g: 0.75561184, b: 0.1372549, a: 1}
+    reward: {fileID: 0}
+  - Icon: {fileID: 814095571, guid: d711287728246d94cbd00fe701cd0e1a, type: 3}
+    Label: Je suis
+    chance: 25
+    slotColor: {r: 1, g: 0.01670494, b: 0, a: 1}
+    reward: {fileID: 0}
+  - Icon: {fileID: -1697716682, guid: d711287728246d94cbd00fe701cd0e1a, type: 3}
+    Label: Je suis
+    chance: 25
+    slotColor: {r: 1, g: 0, b: 0.5598726, a: 1}
+    reward: {fileID: 0}
