@@ -26,7 +26,6 @@ public class FrogController : MonoBehaviour, MovingActors
 
     bool bIsMoving = false;
     private PlayerActions playerInput;
-    int SelectedIndex = 0;
     Point CurrentPoint;
     public UnityEvent OnPlayerJumped;
     public UnityEvent OnPlayerEatFLy;
@@ -129,7 +128,6 @@ public class FrogController : MonoBehaviour, MovingActors
             //No points
             Debug.Log("No points");
         }
-        SelectedIndex = 0;
     }
 
     private IEnumerator MoveTowards(Point point)

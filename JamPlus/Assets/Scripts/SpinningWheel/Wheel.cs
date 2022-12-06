@@ -1,17 +1,51 @@
 using DG.Tweening;
+using EasyUI.PickerWheelUI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
-public struct SlotsAndChance
+public class SlotsAndChance
 {
-    public SlotsAndChance(SlotPiece s, float c) { slot = s; chance = c; }
+    public SlotsAndChance(SlotPiece p,WheelSlot s, float c) {
+        _pieceData = p; 
+        _slot = s;  
+        chance = c; 
+        weight = 0; 
+        angle = 0; 
+        halfAngle = 0; 
+    }
+    public SlotsAndChance(SlotPiece p, WheelSlot s, float c, float Oangle, float hAngle)
+    {
+        _pieceData = p;
+        _slot = s;
+        chance = c;
+        weight = 0;
+        angle = Oangle;
+        halfAngle = hAngle;
+    }
 
-    public SlotPiece slot;
+    public WheelSlot _slot;
+
+    public SlotPiece _pieceData;
+
     public float chance;
+
+    public float weight;
+
+    public float GetWeight() { return weight; }
+    public void SetWeight(float val) { weight = val; }
+
+    float angle;
+    public float Angle { get { return angle; } }  
+
+    float halfAngle;
+    public float HalfAngle { get { return halfAngle; } }
 }
 
 public class Wheel : MonoBehaviour
@@ -21,13 +55,16 @@ public class Wheel : MonoBehaviour
     private WheelStyles currentWheelStyle;
     [SerializeField]
     private WheelSlotData WheelslotsData;
-
+    [SerializeField]
+    float spinDuration = 2f;
 
     private List<SlotsAndChance> GeneratedSlots = new List<SlotsAndChance>();
+
     private List<GameObject> GeneratedObjects = new List<GameObject>();
     private float slotAngle = 0f;
     private float halfSlotAngle = 0f;
 
+    private float accumulatedWeight;
     private UnityEngine.UI.Image wheelImg;
 
     private void Awake()
@@ -88,7 +125,7 @@ public class Wheel : MonoBehaviour
             obj.SlotImage.transform.RotateAround(wheelImg.transform.position, Vector3.back, - angle + ownHalf);// = new Vector3(0, 0, angle);//, angle/*(slotAngle * i)*/);
 
             GeneratedObjects.Add(obj.gameObject);
-            GeneratedSlots.Add(new SlotsAndChance(obj, sorted[i].GetChance()));
+            GeneratedSlots.Add(new SlotsAndChance(obj, sorted[i],sorted[i].GetChance(),angle,ownHalf));
         }
         //Lines
         for (int i = 0; i < angles.Count; ++i)
@@ -100,6 +137,7 @@ public class Wheel : MonoBehaviour
                 GeneratedObjects.Add(lineTrns.gameObject);
             }
         }
+        CalculateWeightsAndIndices();
 
     }
 
@@ -135,6 +173,7 @@ public class Wheel : MonoBehaviour
             GetSortedList(array, i, rightIndex);
         return array;
     }
+
     public void SetSlots(WheelSlotData slots, bool createWheel)
     {
         if (!slots) return;
@@ -147,12 +186,15 @@ public class Wheel : MonoBehaviour
     }
 
     bool bIsSpinning = false;
-    private void Update()
+    private void CalculateWeightsAndIndices()
     {
-        if(bIsSpinning)
+        for (int i = 0; i < GeneratedSlots.Count; ++i)
         {
+            accumulatedWeight += GeneratedSlots[i].chance;
 
-        }   
+            GeneratedSlots[i].SetWeight(accumulatedWeight);
+            //GeneratedSlots[i].weight = accumulatedWeight;
+        }
     }
 
     public void Spin()
@@ -162,20 +204,53 @@ public class Wheel : MonoBehaviour
 
         //Generate random location
 
+        int GetRandomPieceIndex()
+        {
+            System.Random rand = new System.Random();
+            double r = rand.NextDouble() * accumulatedWeight;
 
+            for (int i = 0; i < GeneratedSlots.Count; i++)
+                if (GeneratedSlots[i].weight >= r)
+                    return i;
 
+            return 0;
+        }
 
-        Vector3 targetRotation = Vector3.back * (90 + 2 * 360 * 5f);
-        transform
-        .DORotate(targetRotation, 5f, RotateMode.Fast)
-        .SetEase(Ease.InOutQuart);
+        int index = GetRandomPieceIndex();
+        SlotsAndChance selectedSlot = GeneratedSlots[index];
+
+        float angle = -(selectedSlot.Angle * index);
+
+        float rightOffset = (angle - selectedSlot.HalfAngle) % 360;
+        float leftOffset = (angle + selectedSlot.HalfAngle) % 360;
+        
+        float randomAngle = UnityEngine.Random.Range(rightOffset, leftOffset);
+
+        Vector3 targetRotation = Vector3.back * (randomAngle + 2 * 360 * spinDuration);
+
+        Debug.Log("Target Rot: " + targetRotation);
+        
+        var = StartCoroutine(SpinRoutine(targetRotation, selectedSlot));
     }
 
-    private void OnMouseDown()
+    Coroutine var;
+
+    private IEnumerator SpinRoutine(Vector3 targetRotation,SlotsAndChance slot)
     {
-        Spin();
-    }
+        float val=0;
+        Vector3 start = transform.localEulerAngles;
+        while (val<=spinDuration)
+        {
+            transform.localEulerAngles = Vector3.Lerp(start, targetRotation, val / spinDuration);
+            val += Time.deltaTime;
+            yield return null;
+        }
+        slot._slot.ActivateReward();
+        bIsSpinning = false;
 
+        StopCoroutine(var);
+        //OnComplete
+    }
 }
 
 
