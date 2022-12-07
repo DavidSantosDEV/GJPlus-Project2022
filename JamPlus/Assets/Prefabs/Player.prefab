@@ -104,13 +104,13 @@ GameObject:
   - component: {fileID: 5716464713194393487}
   - component: {fileID: 5716464713194393475}
   - component: {fileID: 5716464713194393474}
-  - component: {fileID: 5716464713194393473}
   - component: {fileID: 5716464713194393472}
   - component: {fileID: -5632590966266656995}
   - component: {fileID: 7540671601698811464}
+  - component: {fileID: 1048828178}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Player
+  m_TagString: FakePlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,7 +174,7 @@ SpriteRenderer:
   m_SortingLayerID: -1030369291
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1209639840, guid: 05ffbb2f82b1e8b4f83612e765f11d4a, type: 3}
+  m_Sprite: {fileID: 866680922, guid: 0d48c068f84a67e499ea25079202b48d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -205,40 +205,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5716464713194393473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5716464713194393486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839fdb9882ec6fb47a5925d3e2e41d30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SpeedMovement: 8
-  SpeedAir: 10
-  GravityFalling: 4.5
-  GravityDefault: 3
-  jumpForce: 15
-  jumpStartTime: 0.3
-  jumpInfluenceTime: 3
-  MaxProjectiles: 3
-  TongueStart: {fileID: 5687744976280410640}
-  tongueLenght: 10
-  TongueSpeed: 1
-  TongueCheckSize: 5
-  GrabbableLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  feetPositions:
-  - {fileID: 213233046}
-  - {fileID: 213233046}
-  castSizeGrounded: 0.1
-  LayerGround:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!50 &5716464713194393472
 Rigidbody2D:
   serializedVersion: 4
@@ -317,9 +283,7 @@ LineRenderer:
   m_SortingLayerID: -1030369291
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: -4.773842, y: -1.0496148, z: -4.8924475}
+  m_Positions: []
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -375,3 +339,15 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 1
+--- !u!114 &1048828178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5716464713194393486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaec4065abb26624ebd589133680bf0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

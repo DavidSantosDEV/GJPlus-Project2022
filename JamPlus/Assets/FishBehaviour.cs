@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class FishBehaviour : MonoBehaviour
 {
-    public float speed=2;
+    float speed=5;
+    Vector2 curDir = Vector2.right;
 
-    bool bCanDestroy = false;
+    public void SetDir(Vector2 dir) { 
+        if (dir.x > 0)
+        {
+            transform.localScale = new Vector3(-1, 1,1);
+        }
+        curDir = dir; 
+    }
+    public void SetSpeed(float s) { speed = s; }
 
     private void Update()
     {
-        transform.position += (Vector3)(Vector2.right*speed*Time.deltaTime);
+        transform.position += (Vector3)(curDir*speed*Time.deltaTime);
     }
 
-    private void OnBecameVisible()
-    {
-        bCanDestroy = true;
-    }
+
     private void OnBecameInvisible()
     {
-        if (bCanDestroy)
-        {
-            Destroy(gameObject);
-        }
+       Destroy(gameObject);
     }
 }

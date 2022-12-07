@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - WheelSlice
+  - FakePlayer
   layers:
   - Default
   - TransparentFX
