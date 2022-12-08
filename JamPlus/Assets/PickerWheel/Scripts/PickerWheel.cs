@@ -76,6 +76,7 @@ namespace EasyUI.PickerWheelUI {
       }
 
       private void SetupAudio () {
+         if(tickAudioClip)
          audioSource.clip = tickAudioClip ;
          audioSource.volume = volume ;
          audioSource.pitch = pitch ;

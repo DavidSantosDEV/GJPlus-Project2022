@@ -16,7 +16,7 @@ public class FishBehaviour : MonoBehaviour
     }
     public void SetSpeed(float s) { speed = s; }
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.position += (Vector3)(curDir*speed*Time.deltaTime);
     }

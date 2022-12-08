@@ -456,6 +456,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FishSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 2523204429335442034, guid: 9143d8e4a2ee1a842b7633a506c637fc, type: 3}
+      propertyPath: SpawnVariation
+      value: 2.49
+      objectReference: {fileID: 0}
     - target: {fileID: 2523204429335442035, guid: 9143d8e4a2ee1a842b7633a506c637fc, type: 3}
       propertyPath: m_RootOrder
       value: 3
