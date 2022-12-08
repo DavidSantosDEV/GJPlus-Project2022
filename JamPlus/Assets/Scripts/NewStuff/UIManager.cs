@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject pauseMenuScreen;
+
+    [SerializeField]
+    private GameObject loadingScreen;
 
     private void Awake()
     {
@@ -93,7 +97,12 @@ public class UIManager : MonoBehaviour
 
     public void ShowMainMenu()
     {
-        UIManager.Instance.HideAllGameplayStuff();
+        HideAllGameplayStuff();
         mainMenuScreen.SetActive(true);
+    }
+
+    public void ToggleLoadingScreen(bool v)
+    {
+        loadingScreen.SetActive(v);
     }
 }

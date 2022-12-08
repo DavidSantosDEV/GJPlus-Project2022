@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float MovementSpeed = 4f;
     [SerializeField]
-    private List<LevelData> AllLevels = new List<LevelData>();
+    private LevelHolder allLevels;
+    //private List<LevelData> AllLevels = new List<LevelData>();
 
     private int currentLevelIndex = 0;
 
@@ -89,9 +90,9 @@ public class GameManager : MonoBehaviour
         {
             ResetLevelData();
             string NameOfScene = SceneManager.GetActiveScene().name;
-            for (int i = 0; i<AllLevels.Count; i++)
+            for (int i = 0; i<allLevels.levelList.Length; i++)
             {
-                if (AllLevels[i].LevelName == NameOfScene)
+                if (allLevels.levelList[i].LevelName == NameOfScene)
                 {
                     currentLevelIndex = i;
                     break;
@@ -137,7 +138,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadNewLevel(int index)
     {
-        LevelData levelData = AllLevels[index];
+        LevelData levelData = allLevels.levelList[index];
         ResetLevelData();
         StartCoroutine(LoadSceneAsync(levelData.LevelName));
     }
@@ -147,7 +148,7 @@ public class GameManager : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(Levelname);
         SceneManager.sceneLoaded += OnSceneLoaded;
         //Show UI
-
+        UIManager.Instance.ToggleLoadingScreen(true);
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
         {
@@ -157,6 +158,7 @@ public class GameManager : MonoBehaviour
         //Inform UI that you want to remove the thing
 
         yield return null; //Wait a new frame
+        UIManager.Instance.ToggleLoadingScreen(false);
     }
     void OnSceneLoaded(Scene currentScene, LoadSceneMode loadMode)
     {
@@ -268,7 +270,7 @@ public class GameManager : MonoBehaviour
     {
         ResetLevelData();
         currentLevelIndex = 0;
-        if (AllLevels.Count>0)
+        if (allLevels.levelList.Length>0)
         {
             LoadNewLevel(currentLevelIndex);
         }
@@ -278,22 +280,22 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         currentLevelIndex++;
-        if (currentLevelIndex <= AllLevels.Count - 1)
+        if (currentLevelIndex <= allLevels.levelList.Length- 1)
         {
             LoadNewLevel(currentLevelIndex);
         }
     }
     public void ReloadCurrent()
     {
-        if (AllLevels.Count <= 0) return;
-        if (AllLevels[currentLevelIndex])
+        if (allLevels.levelList.Length<= 0) return;
+        if (allLevels.levelList[currentLevelIndex])
         {
             LoadNewLevel(currentLevelIndex);
         }
     }
     bool IsGameplayLevel(Scene next)
     {
-        foreach (LevelData levelData in AllLevels)
+        foreach (LevelData levelData in allLevels.levelList)
         {
             if (levelData.LevelName == next.name)
             {
@@ -311,14 +313,14 @@ public class GameManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        if (AllLevels[currentLevelIndex])
+        if (allLevels.levelList[currentLevelIndex])
         {
             
             PlaySoundEffect(SoundVictory);
-            AllLevels[currentLevelIndex].SetIsFinished();
-            int stars = AllLevels[currentLevelIndex].CalculateStars(CurrentLevelFliesEaten, CurrentLevelMovesDone);
+            allLevels.levelList[currentLevelIndex].SetIsFinished();
+            int stars = allLevels.levelList[currentLevelIndex].CalculateStars(CurrentLevelFliesEaten, CurrentLevelMovesDone);
 
-            UIManager.Instance?.ShowGameWon(stars, currentLevelIndex < (AllLevels.Count-1),CurrentLevelFliesEaten, AllLevels[currentLevelIndex].FliesForStar, CurrentLevelMovesDone, AllLevels[currentLevelIndex].MovesForStar);
+            UIManager.Instance?.ShowGameWon(stars, currentLevelIndex < (allLevels.levelList.Length-1),CurrentLevelFliesEaten, allLevels.levelList[currentLevelIndex].FliesForStar, CurrentLevelMovesDone, allLevels.levelList[currentLevelIndex].MovesForStar);
         }
 
         

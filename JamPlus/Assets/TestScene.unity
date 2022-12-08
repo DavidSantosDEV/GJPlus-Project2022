@@ -186,10 +186,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6571970890102556207, guid: ff8a83140eb14304f84a132fc0fb650b, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff8a83140eb14304f84a132fc0fb650b, type: 3}
 --- !u!1 &519420028

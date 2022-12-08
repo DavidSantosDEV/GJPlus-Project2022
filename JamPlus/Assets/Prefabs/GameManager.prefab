@@ -46,9 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 2
-  AllLevels:
-  - {fileID: 11400000, guid: 4e75c4473b41e6e488b51a7348c92ad1, type: 2}
-  DebugEditorMode: 1
+  allLevels: {fileID: 11400000, guid: d997e757dd2ddf74781d790595457a4e, type: 2}
+  DebugEditorMode: 0
   SoundVictory:
     audio: {fileID: 8300000, guid: 87959f6abbaecbd49b46ead46fc4f8ce, type: 3}
     volume: 0.2
