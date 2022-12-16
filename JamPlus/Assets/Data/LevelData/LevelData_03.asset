@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1875caed8c2424f98062ec73637371, type: 3}
   m_Name: LevelData_03
   m_EditorClassIdentifier: 
-  LevelName: Level03
+  levelName: Level03
   MovesForStar: 6
   FliesForStar: 1

@@ -153,12 +153,6 @@ public class FrogController : MonoBehaviour, MovingActors
         bIsMoving = false;
         ChangeAnimation(idleAnim);
         SetCurrentPoint(point);
-        Invoke(nameof(Check), 0.5f); 
-    }
-
-    void Check()
-    {
-        GameManager.Instance.CheckPoints();
     }
 
     void CheckFlipping(Vector2 posOriginal, Vector2 pos)

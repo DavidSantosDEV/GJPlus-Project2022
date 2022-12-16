@@ -25,6 +25,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject loadingScreen;
 
+    [SerializeField]
+    private GameObject levelSelectScreen;
+
+    private bool bStartShown = false; 
+
     private void Awake()
     {
         if (Instance == null)
@@ -80,10 +85,12 @@ public class UIManager : MonoBehaviour
     public void HideMenu()
     {
         mainMenuScreen.SetActive(false);
+        bStartShown = true;
     }
 
     public void ShowGameplayScreen()
     {
+        levelSelectScreen.SetActive(false);
         GameOverScreen.SetActive(false);
         gameplayScreen.SetActive(true);
         pauseMenuScreen.SetActive(false);
@@ -98,11 +105,23 @@ public class UIManager : MonoBehaviour
     public void ShowMainMenu()
     {
         HideAllGameplayStuff();
-        mainMenuScreen.SetActive(true);
+        mainMenuScreen.SetActive(!bStartShown);
+        levelSelectScreen.SetActive(bStartShown);
     }
 
     public void ToggleLoadingScreen(bool v)
     {
-        loadingScreen.SetActive(v);
+        loadingScreen?.SetActive(v);
+    }
+
+    public void ToggleLevelSelectActive(bool v)
+    {
+        levelSelectScreen?.SetActive(v);
+    }
+
+    public void ShowLevelSelect()
+    {
+        HideMenu();
+        levelSelectScreen.SetActive(true);
     }
 }

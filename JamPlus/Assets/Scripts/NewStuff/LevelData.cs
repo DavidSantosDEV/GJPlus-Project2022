@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+public class LevelRating
+{
+
+}
+
 [CreateAssetMenu(fileName = "LevelData", menuName = "ScriptableObjects/Levels/LevelDataObject", order = 1)]
 public class LevelData : ScriptableObject
 {
-    public string LevelName;
+    [SerializeField]
+    private string levelName;
     
     private bool IsFinished=false;
 
@@ -15,6 +22,10 @@ public class LevelData : ScriptableObject
     public int MovesForStar = 1;
     
     public int FliesForStar = 1;
+
+
+    public string LevelName { get => levelName; }
+
 
     public void SetIsFinished() {
         IsFinished = true;

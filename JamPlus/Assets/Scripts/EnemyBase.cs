@@ -79,7 +79,7 @@ public class EnemyBase : MonoBehaviour, IEatableInterface, MovingActors
                     FrogController player = GameManager.Instance.GetPlayer();
                     player.ChangeAnimation(player.eatingAnim);
 
-                    GameManager.Instance.AddFly();
+                    LevelManager.Instance.AddFly();
                 }
             }
         }
@@ -114,7 +114,7 @@ public class EnemyBase : MonoBehaviour, IEatableInterface, MovingActors
             FrogController player = GameManager.Instance.GetPlayer();
             player.ChangeAnimation(player.eatingAnim);
 
-            GameManager.Instance.AddFly();
+            LevelManager.Instance.AddFly();
             //Play anim
         }
     }

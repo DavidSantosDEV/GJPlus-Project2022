@@ -45,8 +45,16 @@ public class AnimatedText : MonoBehaviour
             }
             else
             {
-                textComp.text += Chararray[index];
-                index++;
+                if(index < Chararray.Length)
+                {
+                    textComp.text += Chararray[index];
+                    index++;
+                }
+                else
+                {
+                    index= 0;
+                    textComp.text = baseText;
+                }
             }
             yield return new WaitForSeconds(time);
         }

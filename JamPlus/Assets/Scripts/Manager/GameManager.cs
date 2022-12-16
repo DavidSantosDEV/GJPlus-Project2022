@@ -20,31 +20,14 @@ public class GameManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField]
     private float MovementSpeed = 4f;
-    [SerializeField]
-    private LevelHolder allLevels;
-    //private List<LevelData> AllLevels = new List<LevelData>();
-
-    private int currentLevelIndex = 0;
-
 
     FrogController Player;
-
-    private List<Point> LevelPoints = new List<Point>();
 
     [SerializeField]
     private bool DebugEditorMode=false;
 
     [SerializeField]
     AudioAndVolume SoundVictory;
-
-    private int CurrentLevelFliesEaten;
-    private int CurrentLevelMovesDone = 0;
-
-    void ResetLevelData()
-    {
-        CurrentLevelFliesEaten=0;
-        CurrentLevelMovesDone = 0;
-}
 
     public static GameManager Instance { private set; get; }
 
@@ -75,30 +58,23 @@ public class GameManager : MonoBehaviour
         SourceSFX.PlayOneShot(clip.audio,clip.volume);
     }
 
-    void AddJump()
-    {
-        CurrentLevelMovesDone++;
-    }
-    public void AddFly()
-    {
-        CurrentLevelFliesEaten++;
-    }
+
 
     private void Start()
     {
         if (DebugEditorMode)
         {
-            ResetLevelData();
-            string NameOfScene = SceneManager.GetActiveScene().name;
-            for (int i = 0; i<allLevels.levelList.Length; i++)
+            LevelManager.Instance.ResetLevelData();
+            //string NameOfScene = SceneManager.GetActiveScene().name;
+            /*for (int i = 0; i<allLevels.levelList.Length; i++)
             {
                 if (allLevels.levelList[i].LevelName == NameOfScene)
                 {
                     currentLevelIndex = i;
                     break;
                 }
-            }
-            LoadGameplayData();
+            }*/
+            LevelManager.Instance.LoadLevelData();
             UIManager.Instance.HideMenu();
             UIManager.Instance.ShowGameplayScreen();
         }
@@ -106,17 +82,6 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.ShowMainMenu();
         }
-    }
-
-    public void OpenMainMenu()
-    {
-        Debug.Log("Opening Main Menu");
-
-        StartCoroutine(LoadSceneAsync("MainMenu"));
-        //SceneManager.LoadScene("MainMenu");
-        UIManager.Instance.HideAllGameplayStuff();
-        UIManager.Instance.ShowMainMenu();
-        
     }
 
     public bool CanMove()
@@ -136,93 +101,34 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    /*
     public void LoadNewLevel(int index)
     {
         LevelData levelData = allLevels.levelList[index];
-        ResetLevelData();
+        LevelManager.Instance.ResetLevelData();
         StartCoroutine(LoadSceneAsync(levelData.LevelName));
     }
 
-    private IEnumerator LoadSceneAsync(string Levelname)
+    public void OpenLevel(string level)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(Levelname);
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        //Show UI
-        UIManager.Instance.ToggleLoadingScreen(true);
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
+        for (int i = 0; i< allLevels.levelList.Length; ++i)
         {
-            yield return null;
+            if (level == allLevels.levelList[i].LevelName)
+            {
+                currentLevelIndex= i;
+                break;
+            }
         }
 
-        //Inform UI that you want to remove the thing
 
-        yield return null; //Wait a new frame
-        UIManager.Instance.ToggleLoadingScreen(false);
+
     }
-    void OnSceneLoaded(Scene currentScene, LoadSceneMode loadMode)
-    {
-        if (IsGameplayLevel(currentScene))
-        {
-            UIManager.Instance.HideMenu();
-            ResetLevelData();
-            LoadGameplayData();
-            UIManager.Instance.HideAllGameplayStuff();
-            UIManager.Instance.ShowGameplayScreen();
-        }
-        else
-        {
-            UIManager.Instance.HideAllGameplayStuff();
-            UIManager.Instance.ShowMainMenu();
-        }
-    }
+    */
+
 
     void SaveGameplayData()
     {
 
-    }
-    List<Point> IfZeroGameOver = new List<Point>();
-    List<Point> savingPoints = new List<Point>();
-    void LoadGameplayData()
-    {
-        LevelPoints.Clear();
-        LevelPoints.AddRange(FindObjectsOfType<Point>());
-        IfZeroGameOver.Clear();
-        savingPoints.Clear();
-        foreach (Point p in LevelPoints)
-        {
-            if (p.GameOverIfVanished)
-            {
-                savingPoints.AddRange(p.savingPoints);
-                IfZeroGameOver.Add(p);
-            }
-        }
-        if (!Player)
-        {
-            Player = FindObjectOfType<FrogController>();
-        }
-        if (Player)
-        {
-            Point startPoint = GetStartingPoint();
-            Player?.SetCurrentPoint(startPoint);
-            Player.transform.position = startPoint.transform.position;
-
-            Player.OnPlayerJumped.RemoveListener(AddFly);
-            Player.OnPlayerJumped.RemoveListener(AddJump);
-
-            Player.OnPlayerJumped.AddListener(AddJump);
-            Player.OnPlayerEatFLy.AddListener(AddFly);
-        }
-    }
-
-    
-    public void RemoveFinalPoint(Point po)
-    {
-        if (IfZeroGameOver.Contains(po))
-        {
-            IfZeroGameOver.Remove(po);
-            
-        }
     }
 
     public void CheckPoints()
@@ -251,82 +157,11 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ShowGameOver();
     }
 
-    public int GetPointCount() { return LevelPoints.Count; }
-
-    Point GetStartingPoint()
-    {
-        foreach (Point point in LevelPoints)
-        {
-            if (point.GetIsStartingPoint())
-            {
-                return point;
-            }
-        }
-        return null;
-    }
-
-
-    public void PlayFromStart()
-    {
-        ResetLevelData();
-        currentLevelIndex = 0;
-        if (allLevels.levelList.Length>0)
-        {
-            LoadNewLevel(currentLevelIndex);
-        }
-        
-    }
-
-    public void NextLevel()
-    {
-        currentLevelIndex++;
-        if (currentLevelIndex <= allLevels.levelList.Length- 1)
-        {
-            LoadNewLevel(currentLevelIndex);
-        }
-    }
-    public void ReloadCurrent()
-    {
-        if (allLevels.levelList.Length<= 0) return;
-        if (allLevels.levelList[currentLevelIndex])
-        {
-            LoadNewLevel(currentLevelIndex);
-        }
-    }
-    bool IsGameplayLevel(Scene next)
-    {
-        foreach (LevelData levelData in allLevels.levelList)
-        {
-            if (levelData.LevelName == next.name)
-            {
-                //Its a gameplay level
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void AddScoreForLevel()
     {
 
     }
 
-    public void LevelComplete()
-    {
-        if (allLevels.levelList[currentLevelIndex])
-        {
-            
-            PlaySoundEffect(SoundVictory);
-            allLevels.levelList[currentLevelIndex].SetIsFinished();
-            int stars = allLevels.levelList[currentLevelIndex].CalculateStars(CurrentLevelFliesEaten, CurrentLevelMovesDone);
-
-            UIManager.Instance?.ShowGameWon(stars, currentLevelIndex < (allLevels.levelList.Length-1),CurrentLevelFliesEaten, allLevels.levelList[currentLevelIndex].FliesForStar, CurrentLevelMovesDone, allLevels.levelList[currentLevelIndex].MovesForStar);
-        }
-
-        
-
-        Debug.Log("Level completed!");
-    }
-
     public FrogController GetPlayer() { return Player; }
+    public void SetPlayer(FrogController P) { Player = P; }
 }

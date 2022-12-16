@@ -14,25 +14,28 @@ public class ButtonFunctions : MonoBehaviour
     public void PlayButton()
     {
         PlaySound();
-        GameManager.Instance.PlayFromStart();
+        //Show UI for level select
+        UIManager.Instance.ShowLevelSelect();
+        //GameManager.Instance.PlayFromStart();
     }
 
     public void NextLevelButton()
     {
         PlaySound();
-        GameManager.Instance.NextLevel();
+        LevelManager.Instance.GoToNextLevel();
+        //LevelManager.Instance.NextLevel();
     }
 
     public void RetryButtonm()
     {
         PlaySound();
-        GameManager.Instance.ReloadCurrent();
+        LevelManager.Instance.ReloadCurrent();
     }
 
     public void MainMenuButton()
     {
         PlaySound();
-        GameManager.Instance.OpenMainMenu();
+        LevelManager.Instance.OpenMainMenu();
     }
 
     public void PauseGameplayButton()

@@ -57,7 +57,8 @@ public class Point : MonoBehaviour
             if(PointCollider)PointCollider.enabled = false;
             sinking?.gameObject.SetActive(true);
             sinking?.PlayAnim();
-            GameManager.Instance.RemoveFinalPoint(this);
+            //LevelManager.Instance.
+            //GameManager.Instance.RemoveFinalPoint(this);
             GameManager.Instance.PlaySoundEffect(audioDestroy);
         }
         //Play Anim
@@ -84,7 +85,8 @@ public class Point : MonoBehaviour
 
     void FinishGame()
     {
-        GameManager.Instance?.LevelComplete();
+        LevelManager.Instance?.LevelComplete();
+        //GameManager.Instance?.LevelComplete();
     }
 
     public void SetUsed()

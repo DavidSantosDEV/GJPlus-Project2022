@@ -13,9 +13,10 @@ public class PointEditor : UnityEditor.Editor
         base.OnInspectorGUI();
 
 
-        Point pt = target as Point;
+        
         if (GUILayout.Button("GenerateRandomNenufarSprite"))
         {
+            Point pt = target as Point;
             pt?.GenerateRandomSprite();
         }
     }
